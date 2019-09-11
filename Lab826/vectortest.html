@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script src='jsvector.js'></script>
+  </head>
+  <body>
+    <script>
+      var v1 = new JSVector(3, 4);
+      var v2 = new JSVector(5, 12);
+      var addVec = JSVector.addGetNew(v1, v2);
+      var subVec = JSVector.subGetNew(v1, v2);
+
+      var mult = v1.copy().multiply(2);
+      var div = v1.copy().divide(2);
+      var limitVec = v2.copy().limit(10);
+      var norm = v1.copy().normalize();
+
+      console.log("v1 = [3, 4]\nv2 = [5, 12]")
+
+      console.log("v1.copy().setMagnitude(25) expected to be [15, 19.996]. Returned vector: " + v1.copy().setMagnitude(25).toString());
+      console.log("v1.copy().setDirection(Math.PI*4/5) expected to [-4.045, 2.939]. Returned vector: " + v1.copy().setDirection(Math.PI*4/5).toString());
+      console.log("v1.getMagnitude expected to be 5. Returned value: " + v1.getMagnitude());
+      console.log("v1.getdirection expected to be .93. Returned value: " + v1.getDirection());
+      console.log("addGetNew(v1, v2) expected to be [8, 16], [17.8, 1.1]. Returned vector: " + addVec.toString());
+      console.log("subGetNew(v1, v2) expected to be [-2, -8], [8.25, -1.82]. Returned vector: " + subVec.toString());
+      console.log("v1.copy().multiply(2) expected to be [6, 8]. Returned vector: " + mult.toString());
+      console.log("v1.copy().divide(2) expected to be [1.5, 2]. Returned vector: " + div.toString());
+      console.log("v1.copy().normalize() expected to be [.6, .8]. Returned vector: " + norm.toString());
+      console.log("v2.copy().limit(10) expected to be [3,846, 9.231]. Returned vector: " + limitVec.toString());
+      console.log("v1.distance(v2) expected to be 8.246. Returned value: " + v1.distance(v2));
+      console.log("v1.distanceSquared(v2) expected to be 68. Returned value: " + v1.distanceSquared(v2));
+      console.log("v1.copy().rotate(Math.PI*2/3) expected to be [-4.964, .598]. Returned value: " + v1.copy().rotate(Math.PI*2/3).toString());
+      console.log("angleBetween(v1, v2) expected to be .249. Returned value: " + v1.angleBetween(v1, v2));
+
+    </script>
+  </body>
+</html>
