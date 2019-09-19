@@ -2,6 +2,12 @@ addEventListener("load", init);
 
 var canvas;
 var context;
+var radius = 30;
+var loc;
+var vel;
+var gravity = new JSVector(0, 1);
+var stop = false;
+let balls = [];
 
 function init(){
   canvas = document.getElementById("cnv");
@@ -12,34 +18,22 @@ function init(){
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgba(0,0,0,1)";
 
+  loadBalls(Math.random()*100);
+
   animate();
 }
 
-var x, y, vx, vy, radius;
-x = Math.random()*800;
-y = Math.random()*800;
-vx = Math.random()*30-15;
-vy = Math.random()*30-15;
-radius = 40;
+function loadBalls(n){
+  for(let i = 0; i < n; i++){
+    balls.push(new Ball(Math.random()*(canvas.width-2*this.radius)+this.radius, Math.random()*(canvas.height-2*this.radius)+this.radius, Math.random()*12-6, Math.random()*12-6, .3, Math.random()*30));
+  }
+}
+
 
 function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
-
-  context.strokeStyle = "red";
-  context.fillStyle = "red";
-  context.beginPath();
-
-  context.arc(x, y, radius, 0, Math.PI*2, false);
-  context.fill();
-  context.stroke();
-
-  x+=vx;
-  y+=vy;
-  if(x + radius>800 || x - radius<0){
-    vx = -vx;
-  }
-  if(y + radius>800 || y - radius<0){
-    vy = -vy;
+  for(let i = 0; i < balls.length; i++){
+    balls[i].run();
   }
 }
