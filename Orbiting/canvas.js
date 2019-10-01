@@ -48,10 +48,10 @@ function animate(){
     // balls[i].repel(repeller);
     // balls[i].attract(attractor);
     balls[i].orbit(planet);
-    for(let j = 0; j < balls.length; j++){
-      if(balls[j].loc.distance(planet.loc) <= 200){
-        balls[j].orbit(planet);
-      }
-    }
+    // for(let j = 0; j < balls.length; j++){
+    //   //if(balls[j].loc.distance(planet.loc) <= 200){
+    //     balls[j].orbit(planet);
+    // //  }
+    // }
   }
 }

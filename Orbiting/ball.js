@@ -11,9 +11,16 @@ function Ball(x, y, vx, vy, r, oR, c){
 }
 
 Ball.prototype.update = function(){
-  this.loc.add(this.vel);
-  this.vel.limit(15);
-  this.angle += this.aVel;
+  var p = planet;
+  if(this.loc.distance(planet.loc) < 200 && this !== p){
+    this.orbit(p);
+  }else{
+    this.loc.add(this.vel);
+    this.vel.limit(15);
+
+  }
+     this.angle += this.aVel;
+
 }
 
 Ball.prototype.checkEdges = function(){
@@ -52,14 +59,13 @@ Ball.prototype.checkEdges = function(){
 //   }
 // }
 
-Ball.prototype.orbit = function(v2){
-  var h = this.orbRadius + v2.radius;
-  // this.loc.distance(v2.loc);
+Ball.prototype.orbit = function(p){
 
-  if(this.loc.distance(v2.loc) <= 200){
-    this.loc.x = v2.loc.x + h*Math.cos(this.angle);
-    this.loc.y = v2.loc.y + h*Math.sin(this.angle);
-  }
+  var h = this.orbRadius + p.radius;
+  // this.loc.distance(v2.loc);
+  this.loc.x = p.loc.x + h*Math.cos(this.angle);
+  this.loc.y = p.loc.y + h*Math.sin(this.angle);
+
 }
 
 Ball.prototype.draw = function(){
