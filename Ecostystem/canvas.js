@@ -62,15 +62,15 @@ function animate(){
   }
   for(let i = 0; i < planets.length; i++){
     for(let k = 0; k < orbiters.length; k++){
-      orbiters[i].run(planets[k]);
+      orbiters[k].run(planets[i]);
 
       context.lineWidth = 1;
-      context.strokeStyle = orbiters[i].color;
-      context.moveTo(planets[k].loc.x, planets[k].loc.y);
-      context.lineTo(orbiters[i].loc.x, orbiters[i].loc.y);
+      context.strokeStyle = orbiters[k].color;
+      context.moveTo(planets[i].loc.x, planets[i].loc.y);
+      context.lineTo(orbiters[k].loc.x, orbiters[k].loc.y);
       context.stroke();
 
-      orbiters[i].orbit(planets[k]);
+      orbiters[k].orbit(planets[i]);
     }
   }
 

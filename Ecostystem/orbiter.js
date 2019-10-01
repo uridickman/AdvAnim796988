@@ -17,7 +17,7 @@ Orbiter.prototype.update = function(p){
 }
 
 Orbiter.prototype.orbit = function(p){
-
+  p = planets[1];
   var h = this.orbRadius + p.radius;
   this.loc.x = p.loc.x + h*Math.cos(this.angle);
   this.loc.y = p.loc.y + h*Math.sin(this.angle);
