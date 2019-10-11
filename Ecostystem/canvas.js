@@ -8,6 +8,7 @@ var vel;
 let orbiters = [];
 let planets = [];
 let balls = [];
+let ships = [];
 var f;
 let colors = [];
 var hue = 0;
@@ -22,10 +23,7 @@ function init(){
   canvas.style.backgroundColor = "rgb(100, 100, 100)";
 
   loadPlanets(6);
-
-  // for(let j = 0; j < orbiters.length; j++){
-  //   colors.push('hsl(' + Math.floor(360/orbiters.length)*j + ', ' + 100 + '%, ' + 50 + '%)');
-  // }
+  loadShips(100);
 
   animate();
 }
@@ -37,15 +35,24 @@ function loadPlanets(numPlanets){
   }
 }
 
-// function loadBalls(numBalls){
-//   for(let i = 0; i < numBalls; i++){
-//     balls.push(new Ball(Math.random()*(canvas.width-2*this.radius)+this.radius, Math.random()*(canvas.height-2*this.radius)+this.radius, Math.random()*1.6-.8, Math.random()*1.6-.8, 40, 0, 'hsl(' + Math.random()*360 + ', ' + 100 + '%, ' + 50 + '%)'));
-//   }
-// }
+function loadShips(numShips){
+  for(let i = 0; i < numShips; i++){
+    ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*4-2, Math.random()*4-2, 10, 40, 'hsl(310, 90%, 50%)'));
+  }
+}
 
 function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
+  for(let k = 0; k < ships.length; k++){
+    ships[k].run();
+  }
+  for(let m = 0; m < ships.length; m++){
+    let planetIndex = ships[m].checkOrbit()
+    if(planetIndex != -1){
+      ships[m].orbit(planets[planetIndex]);
+    }
+  }
   for(j = 0; j < orbiters.length; j++){
     orbiters[j].run();
 
@@ -54,7 +61,7 @@ function animate(){
     context.moveTo(orbiters[j].planet.loc.x, orbiters[j].planet.loc.y);
     context.lineTo(orbiters[j].loc.x, orbiters[j].loc.y);
     context.stroke();
-    }
+  }
   for(let j = 0; j < planets.length; j++){
     planets[j].color = 'hsl(' + hue + ', ' + 90 + '%, ' + 50 + '%)';
     hue+=.1;

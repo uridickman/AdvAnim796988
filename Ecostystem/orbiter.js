@@ -23,7 +23,6 @@ Orbiter.prototype.orbit = function(){
   var h = this.orbRadius + p.radius;
   this.loc.x = p.loc.x + h*Math.cos(this.angle);
   this.loc.y = p.loc.y + h*Math.sin(this.angle);
-
 }
 
 Orbiter.prototype.draw = function(){
