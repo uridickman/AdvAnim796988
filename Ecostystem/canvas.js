@@ -9,6 +9,7 @@ let orbiters = [];
 let planets = [];
 let balls = [];
 let ships = [];
+var ps;
 var f;
 let colors = [];
 var hue = 0;
@@ -22,8 +23,10 @@ function init(){
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgb(100, 100, 100)";
 
-  loadPlanets(6);
-  loadShips(100);
+  loadPlanets(3);
+  loadShips(80);
+
+  ps = new ParticleSystem(canvas.width/2, canvas.height/2, 10, 100);
 
   animate();
 }
@@ -44,6 +47,7 @@ function loadShips(numShips){
 function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
+  ps.run();
   for(let k = 0; k < ships.length; k++){
     ships[k].run();
   }
