@@ -1,8 +1,9 @@
-function Planet(x, y, vx, vy, r, c){
+function Planet(x, y, vx, vy, r, c, numOrbiters){
   this.loc = new JSVector(x, y);
   this.vel = new JSVector(vx, vy);
   this.radius = r;
   this.color = c;
+  this.numOrbs = numOrbiters;
 }
 
 Planet.prototype.update = function(){
@@ -16,6 +17,13 @@ Planet.prototype.checkEdges = function(){
   }
   if(this.loc.y + this.radius > canvas.height || this.loc.y - this.radius < 0){
     this.vel.y = -this.vel.y;
+  }
+}
+
+Planet.prototype.createOrbiters = function(){
+  for(let i = 0; i < this.numOrbs; i++){
+    //(x, y, vx, vy, radius, orbitRadius, angle, planet#)
+    orbiters.push(new Orbiter(this.loc.x + (this.orbRadius + this.radius)*Math.cos(this.angle), this.loc.y + (this.orbRadius + this.radius)*Math.sin(this.angle), 8, 8, 10, Math.random()*100+5 + this.radius, i*2*Math.PI/this.numOrbs, this));
   }
 }
 
