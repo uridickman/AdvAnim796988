@@ -10,7 +10,7 @@ function ParticleSystem(x, y, vx, vy, ay, radius, numParticles){
 
 ParticleSystem.prototype.addParticles = function(numParticles){
   for(let i = 0; i < this.numParticles; i++){
-    this.particles.push(new Particle(this.origin.x, this.origin.y, 10, Math.random()*3 - 1.5, Math.random()*3 - 1.5, 0, .1, Math.random()*2.5));
+    this.particles.push(new Particle(this.origin.x, this.origin.y, 7, Math.random()*3 - 1.5, Math.random()*3 - 1.5, 0, .1, Math.random()*2.5));
   }
 }
 
@@ -39,7 +39,7 @@ ParticleSystem.prototype.update = function(){
     } else {
       this.particles.splice(i, 1);
       for(let i = 0; i < 1; i++){
-        this.particles.push(new Particle(this.origin.x, this.origin.y, 10, Math.random()*3 - 1.5, Math.random()*3 - 1.5, 0, .1, Math.random()*2));
+        this.particles.push(new Particle(this.origin.x, this.origin.y, 7, Math.random()*3 - 1.5, Math.random()*3 - 1.5, 0, .1, Math.random()*2));
       }
     }
   }

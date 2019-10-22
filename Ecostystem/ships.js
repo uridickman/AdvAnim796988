@@ -4,7 +4,8 @@ function Ship(xCenter, yCenter, vx, vy, side, oR, color){
   this.sideLength = side;
   this.orbRadius = oR;
   this.color = color;
-  this.angle = 0;
+  this.planet = null;
+  this.angle = 0;;
 }
 
 Ship.prototype.update = function(){
@@ -22,19 +23,23 @@ Ship.prototype.checkEdges = function(){
 }
 
 Ship.prototype.checkOrbit = function(){
+  if(this.planet){
+    return;
+  }
   for(let i = 0; i < planets.length; i++){
-    if(this.loc.distance(planets[i].loc) < 100){
-      return i;
+    if(this.loc.distance(planets[i].loc) < this.orbRadius){
+      this.planet = planets[i];
+      this.angle = JSVector.subGetNew(this.loc, this.planet.loc).getDirection();
     }
   }
-  return -1;
 }
 
 Ship.prototype.orbit = function(p){
     var h = this.orbRadius + p.radius;
+    this.angle += 0.02;
     this.loc.x = p.loc.x + h*Math.cos(this.angle);
     this.loc.y = p.loc.y + h*Math.sin(this.angle);
-    this.angle += 0.02;
+
 }
 
 Ship.prototype.draw = function(){
@@ -60,7 +65,12 @@ Ship.prototype.draw = function(){
 }
 
 Ship.prototype.run = function(){
-  this.checkEdges();
+  this.checkOrbit();
+  if(!this.planet){
+    this.checkEdges();
+    this.update();
+  } else {
+    this.orbit(this.planet);
+  }
   this.draw();
-  this.update();
 }

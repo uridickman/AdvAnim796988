@@ -43,39 +43,43 @@ function loadPlanets(numPlanets){
 
 function loadShips(numShips){
   for(let i = 0; i < numShips; i++){
-    ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*4-2, Math.random()*4-2, 10, 40, 'hsl(310, 90%, 50%)'));
+    ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*4-2, Math.random()*4-2, 10, 100, 'hsl(310, 90%, 50%)'));
   }
 }
 
 function createSystemAtMouse(mouse){
-  system.particleSystems.push(new ParticleSystem(mouse.clientX, mouse.clientY, 0, 0, .1, 10, 100));
+  system.particleSystems.push(new ParticleSystem(mouse.clientX, mouse.clientY, 0, 0, 0, 7, 100));
 }
 
 function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
   system.run();
-  // for(let k = 0; k < ships.length; k++){
-  //   ships[k].run();
-  // }
-  // for(let m = 0; m < ships.length; m++){
-  //   let planetIndex = ships[m].checkOrbit()
-  //   if(planetIndex != -1){
-  //     ships[m].orbit(planets[planetIndex]);
-  //   }
-  // }
-  // for(j = 0; j < orbiters.length; j++){
-  //   orbiters[j].run();
-  //
-  //   context.lineWidth = 1;
-  //   context.strokeStyle = 'hsl(' + orbiters[j].hue + ', ' + 100 + '%, ' + 50 + '%)';
-  //   context.moveTo(orbiters[j].planet.loc.x, orbiters[j].planet.loc.y);
-  //   context.lineTo(orbiters[j].loc.x, orbiters[j].loc.y);
-  //   context.stroke();
-  // }
-  // for(let j = 0; j < planets.length; j++){
-  //   planets[j].color = 'hsl(' + hue + ', ' + 90 + '%, ' + 50 + '%)';
-  //   hue+=.1;
-  //   planets[j].run();
-  // }
+  for(let k = 0; k < ships.length; k++){
+    ships[k].run();
+  }
+
+  // check which planet ship is close to
+  // orbit that planet if within 100 pixels
+  for(let m = 0; m < ships.length; m++){
+    ships[m].run();
+  }
+  // iterate through orbiters array
+  // assign colors
+  // draw line from planet to orbiter
+  for(j = 0; j < orbiters.length; j++){
+    orbiters[j].run();
+
+    context.lineWidth = 1;
+    context.strokeStyle = 'hsl(' + orbiters[j].hue + ', ' + 100 + '%, ' + 50 + '%)';
+    context.moveTo(orbiters[j].planet.loc.x, orbiters[j].planet.loc.y);
+    context.lineTo(orbiters[j].loc.x, orbiters[j].loc.y);
+    context.stroke();
+  }
+  // assign colors to planets and run each planet
+  for(let j = 0; j < planets.length; j++){
+    planets[j].color = 'hsl(' + hue + ', ' + 90 + '%, ' + 50 + '%)';
+    hue+=.1;
+    planets[j].run();
+  }
 }
