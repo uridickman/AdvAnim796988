@@ -43,6 +43,16 @@ Ship.prototype.orbit = function(p){
     this.loc.y = p.loc.y + this.rotator.y;
 }
 
+Ship.prototype.eat = function(planet){
+  if(this.loc.distance(planet.loc) < this.orbRadius + planet.radius){
+    var hunger = JSVector.subGetNew(planet.loc, this.loc);
+    hunger.normalize();
+    hunger.multiply(.6);
+    this.vel.add(hunger);
+    this.vel.limit(2);
+  }
+}
+
 Ship.prototype.draw = function(){
   context.save();
 
@@ -72,6 +82,16 @@ Ship.prototype.draw = function(){
 Ship.prototype.run = function(){
   this.checkOrbit();
   if(!this.planet){
+    this.checkEdges();
+    this.update();
+  } else if(this.planet.numShips > 5){
+    context.lineWidth = 1;
+    context.strokeStyle = this.color;
+    context.moveTo(this.planet.loc.x, this.planet.loc.y);
+    context.lineTo(this.loc.x, this.loc.y);
+    context.stroke();
+
+    this.eat(this.planet);
     this.checkEdges();
     this.update();
   } else {

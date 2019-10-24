@@ -1,5 +1,5 @@
 addEventListener("load", init);
-addEventListener("click", createSystemAtMouse);
+// addEventListener("click", createSystemAtMouse);
 
 var canvas;
 var context;
@@ -10,7 +10,7 @@ let orbiters = [];
 let planets = [];
 let balls = [];
 let ships = [];
-var mouse;
+// var mouse;
 var system;
 var f;
 let colors = [];
@@ -26,7 +26,7 @@ function init(){
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
   system = new System();
-  mouse = new MouseEvent("click");
+  // mouse = new MouseEvent("click");
 
   loadPlanets(2);
   loadShips(100);
@@ -47,14 +47,14 @@ function loadShips(numShips){
   }
 }
 
-function createSystemAtMouse(mouse){
-  system.particleSystems.push(new ParticleSystem(mouse.clientX, mouse.clientY, 0, 0, 0, 7, 100));
-}
+// function createSystemAtMouse(mouse){
+//   system.particleSystems.push(new ParticleSystem(mouse.clientX, mouse.clientY, 0, 0, 0, 7, 100));
+// }
 
 function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
-  system.run();
+  // system.run();
   for(let k = 0; k < ships.length; k++){
     ships[k].run();
   }
