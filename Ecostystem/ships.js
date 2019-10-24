@@ -5,7 +5,7 @@ function Ship(xCenter, yCenter, vx, vy, side, oR, color){
   this.orbRadius = oR;
   this.color = color;
   this.planet = null;
-  this.angle = 0;;
+  this.rotator = 0;;
 }
 
 Ship.prototype.update = function(){
@@ -27,26 +27,31 @@ Ship.prototype.checkOrbit = function(){
     return;
   }
   for(let i = 0; i < planets.length; i++){
-    if(this.loc.distance(planets[i].loc) < this.orbRadius){
+    if(this.loc.distance(planets[i].loc) < this.orbRadius + planets[i].radius){
       this.planet = planets[i];
-      this.angle = JSVector.subGetNew(this.loc, this.planet.loc).getDirection();
+      this.rotator = JSVector.subGetNew(this.loc, this.planet.loc);
+      this.rotator.setMagnitude(this.orbRadius + planets[i].radius);
+      planets[i].numShips++;
     }
   }
 }
 
 Ship.prototype.orbit = function(p){
     var h = this.orbRadius + p.radius;
-    this.angle += 0.02;
-    this.loc.x = p.loc.x + h*Math.cos(this.angle);
-    this.loc.y = p.loc.y + h*Math.sin(this.angle);
-
+    this.rotator.rotate(.008);
+    this.loc.x = p.loc.x + this.rotator.x;
+    this.loc.y = p.loc.y + this.rotator.y;
 }
 
 Ship.prototype.draw = function(){
   context.save();
 
   context.translate(this.loc.x,this.loc.y);
-  context.rotate(this.vel.getDirection()+Math.PI/2);
+  var direction = this.vel.getDirection() + Math.PI/2;
+  if(this.planet){
+    direction = this.rotator.getDirection() + Math.PI;
+  }
+  context.rotate(direction);
 
   context.beginPath();
   context.moveTo(-3.5, 3.5);

@@ -43,7 +43,7 @@ function loadPlanets(numPlanets){
 
 function loadShips(numShips){
   for(let i = 0; i < numShips; i++){
-    ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*4-2, Math.random()*4-2, 10, 100, 'hsl(310, 90%, 50%)'));
+    ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*2-1, Math.random()*2-1, 10, 100, 'hsl(310, 90%, 50%)'));
   }
 }
 

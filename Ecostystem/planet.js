@@ -4,6 +4,7 @@ function Planet(x, y, vx, vy, r, c, numOrbiters){
   this.radius = r;
   this.color = c;
   this.numOrbs = numOrbiters;
+  this.numShips = 0;
 }
 
 Planet.prototype.update = function(){
