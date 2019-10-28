@@ -5,7 +5,8 @@ function Ship(xCenter, yCenter, vx, vy, side, oR, color){
   this.orbRadius = oR;
   this.color = color;
   this.planet = null;
-  this.rotator = 0;;
+  this.rotator = 0;
+  this.isEaten = false;
 }
 
 Ship.prototype.update = function(){
@@ -31,7 +32,7 @@ Ship.prototype.checkOrbit = function(){
       this.planet = planets[i];
       this.rotator = JSVector.subGetNew(this.loc, this.planet.loc);
       this.rotator.setMagnitude(this.orbRadius + planets[i].radius);
-      planets[i].numShips++;
+      // planets[i].numShips++;
     }
   }
 }
@@ -84,7 +85,7 @@ Ship.prototype.run = function(){
   if(!this.planet){
     this.checkEdges();
     this.update();
-  } else if(this.planet.numShips > 5){
+  } else {
     context.lineWidth = 1;
     context.strokeStyle = this.color;
     context.moveTo(this.planet.loc.x, this.planet.loc.y);
@@ -94,8 +95,9 @@ Ship.prototype.run = function(){
     this.eat(this.planet);
     this.checkEdges();
     this.update();
-  } else {
-    this.orbit(this.planet);
+    if(this.loc.distance(this.planet.loc) < 1){
+      this.isEaten = true;
+    }
   }
   this.draw();
 }

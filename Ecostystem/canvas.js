@@ -47,6 +47,14 @@ function loadShips(numShips){
   }
 }
 
+function removeShip(){
+  for(let i = ships.length-1; i > 0; i--){
+    if(ships[i].isEaten){
+      ships.splice(i, 1);
+    }
+  }
+}
+
 // function createSystemAtMouse(mouse){
 //   system.particleSystems.push(new ParticleSystem(mouse.clientX, mouse.clientY, 0, 0, 0, 7, 100));
 // }
