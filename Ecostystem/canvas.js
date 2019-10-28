@@ -47,10 +47,11 @@ function loadShips(numShips){
   }
 }
 
-function removeShip(){
+function repealAndReplaceShip(){
   for(let i = ships.length-1; i > 0; i--){
     if(ships[i].isEaten){
       ships.splice(i, 1);
+      ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*2-1, Math.random()*2-1, 10, 100, 'hsl(310, 90%, 50%)'));
     }
   }
 }
@@ -90,4 +91,5 @@ function animate(){
     hue+=.1;
     planets[j].run();
   }
+  repealAndReplaceShip();
 }

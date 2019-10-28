@@ -93,7 +93,6 @@ Ship.prototype.run = function(){
     context.stroke();
 
     this.eat(this.planet);
-    this.checkEdges();
     this.update();
     if(this.loc.distance(this.planet.loc) < 1){
       this.isEaten = true;
