@@ -5,10 +5,28 @@ function Snake(length, color, x, y, vx, vy, radius){
   this.loc = new JSVector(x, y);
   this.vel = new JSVector(vx, vy);
   this.radius = radius;
-  // creates a new tail for this snake
-  // x, y, vx, vy, distance, length, snake, color
-  this.tail = new Tail(this.loc.x, this.loc.y, this.vel.x, this.vel.y, 10, this.length, this, this.color);
+  this.tail = [];
+  this.loadTailPts();
+}
 
+// loads tail[] with this.length JSVector points for the lines to be drawn at
+Snake.prototype.loadTailPts = function(){
+  this.tail.push(this.loc);
+  for(i = 0; i < this.length; i++){
+    this.tail.push(new JSVector(this.loc.x, this.loc.y));
+  }
+}
+
+Snake.prototype.checkUpdateDistance = function(){
+  for(let i = 0; i < this.tail.length - 1; i++){
+    if(this.tail[i+1].distance(this.tail[i]) > 10){
+      var newVel = this.vel;
+      newVel.setDirection(this.tail[i].getDirection(this.tail[i+1]));
+      newVel.normalize();
+      newVel.setMagnitude(this.vel.getMagnitude());
+      this.tail[i] += this.newVel;
+    }
+  }
 }
 
 // ensures that snake does not exit the canvas
@@ -23,12 +41,14 @@ Snake.prototype.checkEdges = function(){
 
 // draws snake
 Snake.prototype.draw = function(){
-  context.strokeStyle = this.color;
-  context.fillStyle = this.color;
-  context.beginPath();
-  context.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI*2, false);
-  context.fill();
-  context.stroke();
+  for(let i = 1; i < this.tail.length; i++){
+    context.strokeStyle = this.color;
+    context.fillStyle = this.color;
+    context.beginPath();
+    context.arc(this.tail[i].x, this.tail[i].y, this.radius, 0, Math.PI*2, false);
+    context.fill();
+    context.stroke();
+  }
 }
 
 // updates snake's location
@@ -39,8 +59,9 @@ Snake.prototype.update = function(){
 
 // runs all of Snake class methods
 Snake.prototype.run = function(){
-  this.tail.run();
   this.checkEdges();
   this.update();
+  this.checkUpdateDistance();
   this.draw();
+
 }
