@@ -15,6 +15,7 @@ var system;
 var f;
 let colors = [];
 var hue = 0;
+var snakeSystem;
 
 function init(){
   canvas = document.getElementById("cnv");
@@ -26,6 +27,7 @@ function init(){
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
   system = new System();
+  snakeSystem = new SnakeSystem(5);
   // mouse = new MouseEvent("click");
 
   loadPlanets(2);
@@ -67,6 +69,7 @@ function animate(){
   for(let k = 0; k < ships.length; k++){
     ships[k].run();
   }
+  snakeSystem.run();
 
   // check which planet ship is close to
   // orbit that planet if within 100 pixels

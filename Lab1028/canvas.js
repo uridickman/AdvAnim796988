@@ -7,15 +7,15 @@ let snake;
 
 function init(){
   canvas = document.getElementById("cnv");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = 1100; //window.innerWidth;;  //
+  canvas.height = 900;  //window.innerHeight;
 
   context = canvas.getContext("2d");
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
   // length, color, x, y, vx, vy, radius
-  snake = new Snake(100, 'white', 200, 200, 5, 4, 20);
+  snake = new Snake(30, 200, 200, Math.random()*10-5, Math.random()*10-5, 20, 'white');
 
   animate();
 }

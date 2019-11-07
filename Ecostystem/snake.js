@@ -18,7 +18,7 @@ function Snake(length, x, y, vx, vy, r, c){
 Snake.prototype.update = function(){
   this.tail[0].add(this.velocities[0]);
   for(let i = 1; i < this.tail.length; i++){
-    if(this.tail[i].distance(this.tail[i-1]) > 10){
+    if(this.tail[i].distance(this.tail[i-1]) > this.radius){
       this.newVector = JSVector.subGetNew(this.tail[i], this.tail[i-1]);
       this.newVector.setMagnitude(this.mag);
       this.tail[i] = this.tail[i].sub(this.newVector);
