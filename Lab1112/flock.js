@@ -6,6 +6,6 @@ function Flock(numBoids, radius, velocity){
 
 Flock.prototype.loadBoids = function(){
   for(i = 0; i < this.numBoids; i++){
-    this.boids.push(new Boid(xxxxxxx));
+    this.boids.push(new Boid(20, Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*5-2.5, Math.random()*5-2.5, 4, 1));
   }
 }

@@ -2,8 +2,7 @@ function Boid(radius, x, y, vx, vy, maxVelocity, maxForce){
   this.radius = radius;
   this.loc = new JSVector(x, y);
   this.vel = new JSVector(vx, vy);
-  this.steerVector = new JSVector();
-  this.directionAtEdge = new JSVector();
+  this.steerVector;
   this.desired;
   this.maxVel = maxVelocity;
   this.maxForce = maxForce;
@@ -14,34 +13,43 @@ Boid.prototype.update = function(){
 }
 
 Boid.prototype.applyForce = function(vector){
-  this.vel.limit(this.maxVel);
   this.vel.add(vector);
-
 }
 
 Boid.prototype.checkEdges = function(){
-  if(this.loc.x + this.radius > canvas.width){
-    this.desired = new JSVector(this.maxVel.x, -1*this.loc.y);
+  if(this.loc.x > canvas.width - 25){
+    this.desired = new JSVector(-1*this.maxSpeed, this.vel.y);
+    this.desired.normalize();
     this.steerVector = JSVector.subGetNew(this.desired, this.vel);
-    this.steerVector.limit(this.maxForce);
-    this.steerVector.setMagnitude(1);
-  } else if(this.loc.x - this.radius < 0){
-    this.desired = new JSVector(this.maxVel.x, this.loc.y);
-    this.steerVector = JSVector.subGetNew(this.desired, this.vel);
-    this.steerVector.limit(this.maxForce);
-    this.steerVector.setMagnitude(1);
+    this.steerVector.normalize();
+    this.steerVector.multiply(.05);
+
+    // this.steerVector.limit(this.maxForce);
+    this.applyForce(this.steerVector);
   }
 
-  if(this.loc.y + this.radius > canvas.height){
-    this.desired = new JSVector(this.maxVel.x, -1*this.loc.x);
+  if(this.loc.x < 25){
+    this.desired = new JSVector(this.vel.x, this.vel.y);
     this.steerVector = JSVector.subGetNew(this.desired, this.vel);
+
     this.steerVector.limit(this.maxForce);
-    this.steerVector.setMagnitude(1);
-  } else if(this.loc.y - this.radius < 0){
-    this.desired = new JSVector(this.maxVel.x, this.loc.x);
+    this.applyForce(this.steerVector);
+  }
+
+  if(this.loc.y > canvas.height - 25){
+    this.desired = new JSVector(this.vel.x, -1*this.vel.y);
     this.steerVector = JSVector.subGetNew(this.desired, this.vel);
+
     this.steerVector.limit(this.maxForce);
-    this.steerVector.setMagnitude(1);
+    this.applyForce(this.steerVector);
+  }
+
+  if(this.loc.y < 25){
+    this.desired = new JSVector(this.vel.x, this.vel.y);
+    this.steerVector = JSVector.subGetNew(this.desired, this.vel);
+
+    this.steerVector.limit(this.maxForce);
+    this.applyForce(this.steerVector);
   }
 }
 
@@ -58,6 +66,5 @@ Boid.prototype.draw = function(){
 Boid.prototype.run = function(){
   this.checkEdges();
   this.update();
-  this.applyForce(this.steerVector);
   this.draw();
 }

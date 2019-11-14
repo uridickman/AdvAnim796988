@@ -14,8 +14,7 @@ function init(){
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
-  //radius, x, y, vx, vy
-  boid = new Boid(20, 400, 400, 2, 3, 4, .5);
+  boid = new Boid(20, 1000, 400, 2, 3, 5, .05);
 
   animate();
 }
