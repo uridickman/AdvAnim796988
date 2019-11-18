@@ -2,7 +2,8 @@ addEventListener("load", init);
 
 var canvas;
 var context;
-var boid;
+var flock;
+let boids = [];
 
 
 function init(){
@@ -14,7 +15,7 @@ function init(){
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
-  boid = new Boid(20, 1000, 400, 2, 3, 5, .05);
+  flock = new Flock(20, 3, .1);
 
   animate();
 }
@@ -25,5 +26,5 @@ function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  boid.run();
+  flock.run();
 }

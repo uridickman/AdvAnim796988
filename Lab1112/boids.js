@@ -1,66 +1,99 @@
-function Boid(radius, x, y, vx, vy, maxVelocity, maxForce){
-  this.radius = radius;
+function Boid(x, y, vx, vy, maxVelocity, maxForce, sep){
   this.loc = new JSVector(x, y);
   this.vel = new JSVector(vx, vy);
-  this.steerVector;
-  this.desired;
+  this.acc = new JSVector(0,0);
   this.maxVel = maxVelocity;
-  this.maxForce = maxForce;
+  this.maxForce = 2*maxForce;
+  this.distFromWall = 50;
+  this.separation = sep;
+  this.sum = new JSVector(0,0);
+  this.vel.normalize();
+  this.vel.multiply(this.maxVel);
 }
 
 Boid.prototype.update = function(){
+  this.vel.add(this.acc);
   this.loc.add(this.vel);
+  this.acc.multiply(0);
 }
 
 Boid.prototype.applyForce = function(vector){
-  this.vel.add(vector);
+  this.acc.add(vector);
 }
 
 Boid.prototype.checkEdges = function(){
-  if(this.loc.x > canvas.width - 25){
-    this.desired = new JSVector(-1*this.maxSpeed, this.vel.y);
-    this.desired.normalize();
-    this.steerVector = JSVector.subGetNew(this.desired, this.vel);
-    this.steerVector.normalize();
-    this.steerVector.multiply(.05);
-
-    // this.steerVector.limit(this.maxForce);
-    this.applyForce(this.steerVector);
+  if(this.loc.x > canvas.width - this.distFromWall){
+    let desired = new JSVector(-1*this.maxVel, this.vel.y);
+    let steer = JSVector.subGetNew(desired, this.vel);
+    steer.limit(this.maxForce);
+    this.applyForce(steer);
   }
 
-  if(this.loc.x < 25){
-    this.desired = new JSVector(this.vel.x, this.vel.y);
-    this.steerVector = JSVector.subGetNew(this.desired, this.vel);
-
-    this.steerVector.limit(this.maxForce);
-    this.applyForce(this.steerVector);
+  if(this.loc.x < this.distFromWall){
+    let desired = new JSVector(this.maxVel, this.vel.y);
+    let steer = JSVector.subGetNew(desired, this.vel);
+    steer.limit(this.maxForce);
+    this.applyForce(steer);
   }
 
-  if(this.loc.y > canvas.height - 25){
-    this.desired = new JSVector(this.vel.x, -1*this.vel.y);
-    this.steerVector = JSVector.subGetNew(this.desired, this.vel);
-
-    this.steerVector.limit(this.maxForce);
-    this.applyForce(this.steerVector);
+  if(this.loc.y > canvas.height - this.distFromWall){
+    let desired = new JSVector(this.vel.x, -1*this.maxVel);
+    let steer = JSVector.subGetNew(desired, this.vel);
+    steer.limit(this.maxForce);
+    this.applyForce(steer);
   }
 
-  if(this.loc.y < 25){
-    this.desired = new JSVector(this.vel.x, this.vel.y);
-    this.steerVector = JSVector.subGetNew(this.desired, this.vel);
+  if(this.loc.y < this.distFromWall){
+    let desired = new JSVector(this.vel.x, this.maxVel);
+    let steer = JSVector.subGetNew(desired, this.vel);
+    steer.limit(this.maxForce);
+    this.applyForce(steer);
+  }
+}
 
-    this.steerVector.limit(this.maxForce);
-    this.applyForce(this.steerVector);
+Boid.prototype.separate = function(){
+  let count = 0;
+  for(let i = 0; i < boids.length; i++){
+    var dist = this.loc.distance(boids[i].loc);
+
+     if ((dist > 0) && (dist < this.separation)){
+       let diff = JSVector.subGetNew(boids[i].loc, this.loc);
+       diff.normalize();
+       this.sum.add(diff);
+       count++;
+     }
+     if(count > 0){
+       this.sum.divide(count);
+       this.sum.setMag(this.maxVel);
+       let steer = JSVector.subGetNew(this.sum, this.vel);
+       steer.limit(this.maxForce);
+       this.applyForce(steer);
+     }
   }
 }
 
 Boid.prototype.draw = function(){
-  context.strokeStyle = 'rgb(255, 255, 255)';
-  context.fillStyle = 'rgb(255, 255, 255)';
+  context.save();
+
+  context.translate(this.loc.x,this.loc.y);
+  var direction = this.vel.getDirection() + Math.PI/2;
+  if(this.planet){
+    direction = this.rotator.getDirection() + Math.PI;
+  }
+  context.rotate(direction);
 
   context.beginPath();
-  context.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI*2, false);
+  context.moveTo(-5, 5);
+  context.lineTo(0, -5/.7);
+  context.lineTo(5, 5);
+  context.closePath();
+
+  context.lineWidth = 2;
+  context.strokeStyle = 'rgb(255, 255, 255)';
   context.stroke();
-  context.fill();
+
+
+  context.restore();
 }
 
 Boid.prototype.run = function(){
