@@ -5,7 +5,7 @@ function Boid(x, y, vx, vy, maxVelocity, maxForce, sep){
   this.maxVel = maxVelocity;
   this.maxForce = 2*maxForce;
   this.distFromWall = 50;
-  this.separation = sep;
+  this.sepDist = sep;
   this.sum = new JSVector(0,0);
   this.vel.normalize();
   this.vel.multiply(this.maxVel);
@@ -52,24 +52,51 @@ Boid.prototype.checkEdges = function(){
 }
 
 Boid.prototype.separate = function(){
-  let count = 0;
   for(let i = 0; i < boids.length; i++){
     var dist = this.loc.distance(boids[i].loc);
 
-     if ((dist > 0) && (dist < this.separation)){
-       let diff = JSVector.subGetNew(boids[i].loc, this.loc);
-       diff.normalize();
-       this.sum.add(diff);
-       count++;
-     }
-     if(count > 0){
-       this.sum.divide(count);
-       this.sum.setMag(this.maxVel);
-       let steer = JSVector.subGetNew(this.sum, this.vel);
-       steer.limit(this.maxForce);
+    if ((dist > 0) && (dist < this.sepDist)){
+       let desired = JSVector.subGetNew(this.loc, boids[i].loc);
+       desired.normalize();
+
+       let steer = JSVector.subGetNew(desired, this.vel);
+       steer.limit(separation.value*this.maxForce);
        this.applyForce(steer);
      }
+     boids[i].vel.setMagnitude(this.maxVel);
   }
+}
+
+// Boid.prototype.cohesion = function(){
+//   let sum = new JSVector();
+//   for(let i = 0; i < boids.length; i++){
+//     var dist = this.loc.distance(boids[i].loc);
+//
+//     if((dist > 0) && (dist < 40))
+//     sum.add(boids[i].vel);
+//   }
+//   sum.divide(boids.length);
+//   sum.setMagnitude(this.maxVel);
+//
+//   let steer = JSVector.subGetNew(sum, this.vel);
+//   steer.limit(alignment.value*this.maxForce);
+//   this.applyForce(steer);
+// }
+
+Boid.prototype.align = function(){
+  let sum = new JSVector();
+  for(let i = 0; i < boids.length; i++){
+    var dist = this.loc.distance(boids[i].loc);
+
+    if((dist > 0) && (dist < 40))
+    sum.add(boids[i].vel);
+  }
+  sum.divide(boids.length);
+  sum.setMagnitude(this.maxVel);
+
+  let steer = JSVector.subGetNew(sum, this.vel);
+  steer.limit(alignment.value*this.maxForce);
+  this.applyForce(steer);
 }
 
 Boid.prototype.draw = function(){
@@ -99,5 +126,7 @@ Boid.prototype.draw = function(){
 Boid.prototype.run = function(){
   this.checkEdges();
   this.update();
+  this.separate();
+  this.align();
   this.draw();
 }
