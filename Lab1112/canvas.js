@@ -7,6 +7,7 @@ let boids = [];
 var separation;
 var alignment;
 var cohesion;
+var wallRepulsion;
 
 
 function init(){
@@ -21,8 +22,9 @@ function init(){
   separation = document.getElementById("sep");
   alignment = document.getElementById("align");
   cohesion = document.getElementById("coh");
+  wallRepulsion = document.getElementById("wall");
 
-  flock = new Flock(60, 3, .1);
+  flock = new Flock(60, 2, .2);
 
   animate();
 }

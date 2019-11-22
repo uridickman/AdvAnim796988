@@ -26,28 +26,28 @@ Boid.prototype.checkEdges = function(){
   if(this.loc.x > canvas.width - this.distFromWall){
     let desired = new JSVector(-1*this.maxVel, this.vel.y);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 
   if(this.loc.x < this.distFromWall){
     let desired = new JSVector(this.maxVel, this.vel.y);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 
   if(this.loc.y > canvas.height - this.distFromWall){
     let desired = new JSVector(this.vel.x, -1*this.maxVel);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 
   if(this.loc.y < this.distFromWall){
     let desired = new JSVector(this.vel.x, this.maxVel);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 }
@@ -70,7 +70,7 @@ Boid.prototype.separate = function(){
        desired.normalize();
 
        let steer = JSVector.subGetNew(desired, this.vel);
-       steer.setMagnitude(separation.value);
+       steer.setMagnitude(15);
        this.applyForce(steer);
      }
      boids[i].vel.setMagnitude(this.maxVel);
@@ -90,7 +90,7 @@ Boid.prototype.cohesion = function(){
   }
   if(count > 0){
     sum.divide(count);
-    this.seek(sum, cohesion.value);
+    this.seek(sum, 10);
   }
 }
 
@@ -111,7 +111,7 @@ Boid.prototype.align = function(){
     let steer = JSVector.subGetNew(sum, this.vel);
     steer.normalize();
 
-    steer.setMagnitude(alignment.value);
+    steer.setMagnitude(10);
     this.applyForce(steer);
   }
 }

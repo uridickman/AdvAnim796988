@@ -16,20 +16,22 @@ var f;
 let colors = [];
 var hue = 0;
 var snakeSystem;
+var flock;
+let boids = [];
 
 function init(){
   canvas = document.getElementById("cnv");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth + 400;
+  canvas.height = window.innerHeight + 400;
 
   context = canvas.getContext("2d");
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
   system = new System();
-  snakeSystem = new SnakeSystem(5);
+  snakeSystem = new SnakeSystem(2);
   // mouse = new MouseEvent("click");
-
+  flock = new Flock(40, 2, .2);
   loadPlanets(2);
   loadShips(100);
 
@@ -66,6 +68,7 @@ function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
   // system.run();
+  flock.run();
   for(let k = 0; k < ships.length; k++){
     ships[k].run();
   }
