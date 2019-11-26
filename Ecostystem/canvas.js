@@ -21,17 +21,18 @@ let boids = [];
 
 function init(){
   canvas = document.getElementById("cnv");
-  canvas.width = window.innerWidth + 400;
-  canvas.height = window.innerHeight + 400;
+  canvas.width = 800;
+  //window.innerWidth + 400;
+  canvas.height = 800;
 
   context = canvas.getContext("2d");
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
   system = new System();
-  snakeSystem = new SnakeSystem(2);
+  snakeSystem = new SnakeSystem(5);
   // mouse = new MouseEvent("click");
-  flock = new Flock(40, 2, .2);
+  flock = new Flock(100, 2, .2);
   loadPlanets(2);
   loadShips(100);
 
@@ -60,6 +61,7 @@ function repealAndReplaceShip(){
   }
 }
 
+
 // function createSystemAtMouse(mouse){
 //   system.particleSystems.push(new ParticleSystem(mouse.clientX, mouse.clientY, 0, 0, 0, 7, 100));
 // }
@@ -67,35 +69,34 @@ function repealAndReplaceShip(){
 function animate(){
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
-  // system.run();
-  flock.run();
-  for(let k = 0; k < ships.length; k++){
-    ships[k].run();
-  }
+  // flock.run();
+  // for(let k = 0; k < ships.length; k++){
+  //   ships[k].run();
+  // }
   snakeSystem.run();
 
   // check which planet ship is close to
   // orbit that planet if within 100 pixels
-  for(let m = 0; m < ships.length; m++){
-    ships[m].run();
-  }
-  // iterate through orbiters array
-  // assign colors
-  // draw line from planet to orbiter
-  for(j = 0; j < orbiters.length; j++){
-    orbiters[j].run();
-
-    context.lineWidth = 1;
-    context.strokeStyle = 'hsl(' + orbiters[j].hue + ', ' + 100 + '%, ' + 50 + '%)';
-    context.moveTo(orbiters[j].planet.loc.x, orbiters[j].planet.loc.y);
-    context.lineTo(orbiters[j].loc.x, orbiters[j].loc.y);
-    context.stroke();
-  }
-  // assign colors to planets and run each planet
-  for(let j = 0; j < planets.length; j++){
-    planets[j].color = 'hsl(' + hue + ', ' + 90 + '%, ' + 50 + '%)';
-    hue+=.1;
-    planets[j].run();
-  }
-  repealAndReplaceShip();
+  // for(let m = 0; m < ships.length; m++){
+  //   ships[m].run();
+  // }
+  // // iterate through orbiters array
+  // // assign colors
+  // // draw line from planet to orbiter
+  // for(j = 0; j < orbiters.length; j++){
+  //   orbiters[j].run();
+  //
+  //   context.lineWidth = 1;
+  //   context.strokeStyle = 'hsl(' + orbiters[j].hue + ', ' + 100 + '%, ' + 50 + '%)';
+  //   context.moveTo(orbiters[j].planet.loc.x, orbiters[j].planet.loc.y);
+  //   context.lineTo(orbiters[j].loc.x, orbiters[j].loc.y);
+  //   context.stroke();
+  // }
+  // // assign colors to planets and run each planet
+  // for(let j = 0; j < planets.length; j++){
+  //   planets[j].color = 'hsl(' + hue + ', ' + 90 + '%, ' + 50 + '%)';
+  //   hue+=.1;
+  //   planets[j].run();
+  // }
+  // repealAndReplaceShip();
 }

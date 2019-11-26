@@ -26,6 +26,18 @@ Snake.prototype.update = function(){
   }
 }
 
+Snake.prototype.checkForSnakes = function(){
+  for(let i = 0; i < snakeSystem.snakeList.length; i++){
+    var newSnakeHead = snakeSystem.snakeList[i].tail[0];
+    if(newSnakeHead != this.tail[0]){
+      if(this.tail[0].distance(newSnakeHead) <= 20){
+        snakeSystem.snakeList.push(new Snake(30, this.tail[0].x, this.tail[0].y, 2, 1.7, 10, "white"));
+        break;
+      }
+    }
+  }
+}
+
 // pushes location of each tail part to tail[]
 Snake.prototype.createTail = function(){
   for(let i = 0; i < this.length; i++){
@@ -51,9 +63,9 @@ Snake.prototype.draw = function(){
     for(let i = 1; i < this.tail.length; i++){
       context.strokeStyle = "white";
       //'hsl(' + 100 + ', ' + 100 + '%, ' + this.alpha + '%)'
-      context.lineWidth = this.lWidth;
+      context.lineWidth = this.lWidth - i*.6;
 
-      this.lWidth -= this.lWidth/this.tail.length;
+      // this.lWidth -= this.lWidth/this.tail.length;
       this.alpha -= this.alpha/this.tail.length;
       context.lineCap = 'round';
 
@@ -67,6 +79,7 @@ Snake.prototype.draw = function(){
 
 Snake.prototype.run = function(){
   this.checkEdges();
+  this.checkForSnakes();
   this.update();
   this.draw();
 }

@@ -127,9 +127,9 @@ Boid.prototype.draw = function(){
   context.rotate(direction);
 
   context.beginPath();
-  context.moveTo(-5, 5);
-  context.lineTo(0, -5/.7);
-  context.lineTo(5, 5);
+  context.moveTo(-3.5, 3.5);
+  context.lineTo(0, -5);
+  context.lineTo(3.5, 3.5);
   context.closePath();
 
   context.lineWidth = 2;
