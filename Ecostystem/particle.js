@@ -7,7 +7,7 @@ function Particle(x, y, radius, vx, vy, ax, ay, life){
 }
 
 Particle.prototype.update = function(){
-  this.vel.add(this.accel);
+  // this.vel.add(this.accel);
   this.loc.add(this.vel);
   this.lifeSpan -= .03;
 }

@@ -51,6 +51,8 @@ Ship.prototype.eat = function(planet){
     hunger.multiply(.6);
     this.vel.add(hunger);
     this.vel.limit(2);
+    // (x, y, vx, vy, ay, radius, numParticle){
+
   }
 }
 

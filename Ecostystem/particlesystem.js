@@ -1,11 +1,11 @@
-function ParticleSystem(x, y, vx, vy, ay, radius, numParticles){
+function ParticleSystem(x, y, vx, vy, ay, radius, numParticle){
   this.origin = new JSVector(x, y);
   this.vel = new JSVector(vx, vy);
   this.accel = new JSVector(0, ay);
   this.radius = radius;
-  this.numParticles = numParticles;
+  this.numParticles = numParticle;
   this.particles = [];
-  this.addParticles(numParticles);
+  this.addParticles(numParticle);
 }
 
 ParticleSystem.prototype.addParticles = function(numParticles){
@@ -36,16 +36,16 @@ ParticleSystem.prototype.update = function(){
   for(let i = this.particles.length - 1; i >= 0; i--){
     if(!this.particles[i].dead()){
       this.particles[i].run();
-    } else {
-      this.particles.splice(i, 1);
-      for(let i = 0; i < 1; i++){
-        this.particles.push(new Particle(this.origin.x, this.origin.y, 7, Math.random()*3 - 1.5, Math.random()*3 - 1.5, 0, .1, Math.random()*2));
-      }
+    }
+    // else {
+    //   this.particles.splice(i, 1);
+    //   for(let i = 0; i < 1; i++){
+    //     this.particles.push(new Particle(this.origin.x, this.origin.y, 7, Math.random()*3 - 1.5, Math.random()*3 - 1.5, 0, .1, Math.random()*2));
+    //   }
     }
   }
-}
 
 ParticleSystem.prototype.run = function(){
-  this.draw();
+  // this.draw();
   this.update();
 }
