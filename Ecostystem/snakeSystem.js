@@ -11,7 +11,16 @@ SnakeSystem.prototype.createSnakes = function(){
   }
 }
 
+SnakeSystem.prototype.birthSnake = function(){
+  for(let i = 0; i < this.snakeList.length; i++){
+    if(this.snakeList[i].giveBirth){
+      this.snakeList.push(new Snake(30, this.snakeList[i].tail[0], this.snakeList[i].tail[0], -1, 1, 10, "white"));
+    }
+}
+}
+
 SnakeSystem.prototype.run = function(){
+  this.birthSnake();
   for(let i = 0; i < this.snakeList.length; i++){
     this.snakeList[i].run();
   }

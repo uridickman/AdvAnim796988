@@ -24,6 +24,9 @@ let boidsBlue = [];
 
 function init(){
   canvas = document.getElementById("cnv");
+  // canvas.width = 800;
+  // canvas.height = 800;
+
   canvas.width = window.innerWidth + 400;
   canvas.height = window.innerHeight + 400;
 

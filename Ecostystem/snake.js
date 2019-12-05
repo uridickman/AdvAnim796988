@@ -10,6 +10,7 @@ function Snake(length, x, y, vx, vy, r, c){
   this.newVector = new JSVector();
   this.lWidth;
   this.alpha;
+  this.giveBirth = false;
   this.createTail();
 }
 
@@ -27,12 +28,11 @@ Snake.prototype.update = function(){
 }
 
 Snake.prototype.checkForSnakes = function(){
+  this.giveBirth = false;
   for(let i = 0; i < snakeSystem.snakeList.length; i++){
-    var newSnakeHead = snakeSystem.snakeList[i].tail[0];
-    if(newSnakeHead != this.tail[0]){
-      if(this.tail[0].distance(newSnakeHead) <= 20){
-        snakeSystem.snakeList.push(new Snake(30, this.tail[0].x, this.tail[0].y, 2, 1.7, 10, "white"));
-        break;
+    if(snakeSystem.snakeList[i] != this){
+      if(snakeSystem.snakeList[i].tail[0].distance(this.tail[0]) <= 10){
+        this.giveBirth = true;
       }
     }
   }
