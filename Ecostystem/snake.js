@@ -49,7 +49,7 @@ Snake.prototype.draw = function(){
   this.lWidth = 30;
   this.alpha = 50;
     for(let i = 1; i < this.tail.length; i++){
-      context.strokeStyle = 'hsl(' + 360 + ', ' + 100 + '%, ' + this.alpha + '%)';
+      context.strokeStyle = 'hsl(' + 0 + ', ' + 0 + '%, ' + this.alpha + '%)';
       context.lineWidth = this.lWidth;
 
       this.lWidth -= this.lWidth/this.tail.length;

@@ -15,7 +15,7 @@ function init(){
   canvas.style.border = "solid black 2px";
   canvas.style.backgroundColor = "rgb(12, 12, 12)";
 
-  flock = new Flock(20, 3, .1);
+  flock = new Flock(100, 3, .1);
 
   animate();
 }

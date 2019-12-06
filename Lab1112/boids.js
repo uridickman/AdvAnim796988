@@ -2,18 +2,22 @@ function Boid(x, y, vx, vy, maxVelocity, maxForce, sep){
   this.loc = new JSVector(x, y);
   this.vel = new JSVector(vx, vy);
   this.acc = new JSVector(0,0);
+
   this.maxVel = maxVelocity;
   this.maxForce = 2*maxForce;
+
   this.distFromWall = 50;
+
   this.separation = sep;
   this.sum = new JSVector(0,0);
-  this.vel.normalize();
-  this.vel.multiply(this.maxVel);
+
+  this.vel.setMagnitude(this.maxVel);
 }
 
 Boid.prototype.update = function(){
   this.vel.add(this.acc);
   this.loc.add(this.vel);
+
   this.acc.multiply(0);
 }
 
@@ -57,14 +61,15 @@ Boid.prototype.separate = function(){
     var dist = this.loc.distance(boids[i].loc);
 
      if ((dist > 0) && (dist < this.separation)){
-       let diff = JSVector.subGetNew(boids[i].loc, this.loc);
+       let diff = JSVector.subGetNew(this.loc, boids[i].loc);
        diff.normalize();
        this.sum.add(diff);
        count++;
+       boids[i].vel.setMagnitude(this.maxVel);
      }
      if(count > 0){
        this.sum.divide(count);
-       this.sum.setMag(this.maxVel);
+       this.sum.setMagnitude(this.maxVel);
        let steer = JSVector.subGetNew(this.sum, this.vel);
        steer.limit(this.maxForce);
        this.applyForce(steer);
@@ -98,6 +103,7 @@ Boid.prototype.draw = function(){
 
 Boid.prototype.run = function(){
   this.checkEdges();
+  this.separate();
   this.update();
   this.draw();
 }
