@@ -21,9 +21,13 @@ var flock1;
 var flock2;
 let boidsRed = [];
 let boidsBlue = [];
+let predators = [];
+var image = null;
 
 function init(){
   canvas = document.getElementById("cnv");
+
+
   // canvas.width = 800;
   // canvas.height = 800;
 
@@ -39,9 +43,17 @@ function init(){
   // mouse = new MouseEvent("click");
   flock1 = new Flock(100, 2, .2, "red");
   flock2 = new Flock(100, 2, .2, "blue");
-  loadPlanets(3);
-  loadShips(150);
+  //x, y, vx, vy, color
 
+  loadShips(150);
+  for(let i = 0; i < 10; i++){
+    predators.push(new Predator(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*2-1, Math.random()*2-1, 'green'));
+  }
+
+  image = new Image();   // Create new img element
+  image.src = 'trololol.png';
+
+  loadPlanets(3);
   animate();
 }
 
@@ -78,6 +90,9 @@ function animate(){
   context.clearRect(0, 0, canvas.width, canvas.height);
   flock1.run();
   flock2.run();
+  for(let i = 0; i < predators.length; i++){
+    predators[i].run();
+  }
   for(let k = 0; k < ships.length; k++){
   ships[k].run();
   }
