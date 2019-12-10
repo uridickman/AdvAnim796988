@@ -130,22 +130,11 @@ Boid.prototype.align = function(){
 Boid.prototype.draw = function(){
   context.save();
 
-  context.translate(this.loc.x,this.loc.y);
+  context.translate(this.loc.x, this.loc.y);
   var direction = this.vel.getDirection() + Math.PI/2;
-  if(this.planet){
-    direction = this.rotator.getDirection() + Math.PI;
-  }
   context.rotate(direction);
 
-  context.beginPath();
-  context.moveTo(-3.5, 3.5);
-  context.lineTo(0, -5);
-  context.lineTo(3.5, 3.5);
-  context.closePath();
-
-  context.lineWidth = 2;
-  context.strokeStyle = this.color;
-  context.stroke();
+  context.drawImage(image3, -20, -20, 40, 40);
 
 
   context.restore();
