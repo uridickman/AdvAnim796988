@@ -10,6 +10,7 @@ function Snake(length, x, y, vx, vy, r, c){
   this.newVector = new JSVector();
   this.lWidth;
   this.alpha;
+  this.giveBirth = false;
   this.createTail();
 }
 
@@ -22,6 +23,17 @@ Snake.prototype.update = function(){
       this.newVector = JSVector.subGetNew(this.tail[i], this.tail[i-1]);
       this.newVector.setMagnitude(this.mag);
       this.tail[i] = this.tail[i].sub(this.newVector);
+    }
+  }
+}
+
+Snake.prototype.checkForSnakes = function(){
+  this.giveBirth = false;
+  for(let i = 0; i < snakeSystem.snakeList.length; i++){
+    if(snakeSystem.snakeList[i] != this){
+      if(snakeSystem.snakeList[i].tail[0].distance(this.tail[0]) <= 10){
+        this.giveBirth = true;
+      }
     }
   }
 }
@@ -49,10 +61,11 @@ Snake.prototype.draw = function(){
   this.lWidth = 30;
   this.alpha = 50;
     for(let i = 1; i < this.tail.length; i++){
-      context.strokeStyle = 'hsl(' + 0 + ', ' + 0 + '%, ' + this.alpha + '%)';
-      context.lineWidth = this.lWidth;
+      context.strokeStyle = "white";
+      //'hsl(' + 100 + ', ' + 100 + '%, ' + this.alpha + '%)'
+      context.lineWidth = this.lWidth - i*.6;
 
-      this.lWidth -= this.lWidth/this.tail.length;
+      // this.lWidth -= this.lWidth/this.tail.length;
       this.alpha -= this.alpha/this.tail.length;
       context.lineCap = 'round';
 
@@ -66,6 +79,7 @@ Snake.prototype.draw = function(){
 
 Snake.prototype.run = function(){
   this.checkEdges();
+  this.checkForSnakes();
   this.update();
   this.draw();
 }

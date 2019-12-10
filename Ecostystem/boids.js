@@ -1,14 +1,24 @@
-function Boid(x, y, vx, vy, maxVelocity, maxForce, sep){
+function Boid(x, y, vx, vy, maxVelocity, maxForce, sep, color){
   this.loc = new JSVector(x, y);
   this.vel = new JSVector(vx, vy);
   this.acc = new JSVector(0,0);
-
   this.maxVel = maxVelocity;
   this.maxForce = maxForce;
+  this.color = color;
   this.distFromWall = 50;
   this.sepDist = sep;
   this.sum = new JSVector(0,0);
   this.vel.setMagnitude(this.maxVel);
+  this.boidList;
+  this.setBoidType();
+}
+
+Boid.prototype.setBoidType = function(){
+  if(this.color === "red"){
+    this.boidList = boidsRed;
+  } else{
+    this.boidList = boidsBlue;
+  }
 }
 
 Boid.prototype.update = function(){
@@ -16,7 +26,6 @@ Boid.prototype.update = function(){
 
   this.vel.add(this.acc);
   this.loc.add(this.vel);
-
   this.acc.multiply(0);
 }
 
@@ -28,28 +37,28 @@ Boid.prototype.checkEdges = function(){
   if(this.loc.x > canvas.width - this.distFromWall){
     let desired = new JSVector(-1*this.maxVel, this.vel.y);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 
   if(this.loc.x < this.distFromWall){
     let desired = new JSVector(this.maxVel, this.vel.y);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 
   if(this.loc.y > canvas.height - this.distFromWall){
     let desired = new JSVector(this.vel.x, -1*this.maxVel);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 
   if(this.loc.y < this.distFromWall){
     let desired = new JSVector(this.vel.x, this.maxVel);
     let steer = JSVector.subGetNew(desired, this.vel);
-    steer.setMagnitude(wallRepulsion.value);
+    steer.setMagnitude(40);
     this.applyForce(steer);
   }
 }
@@ -64,35 +73,35 @@ Boid.prototype.seek = function(target, multiplier){
 }
 
 Boid.prototype.separate = function(){
-  for(let i = 0; i < boids.length; i++){
-    var dist = this.loc.distance(boids[i].loc);
+  for(let i = 0; i < this.boidList.length; i++){
+    var dist = this.loc.distance(this.boidList[i].loc);
 
     if ((dist > 0) && (dist < this.sepDist)){
-       let desired = JSVector.subGetNew(this.loc, boids[i].loc);
+       let desired = JSVector.subGetNew(this.loc, this.boidList[i].loc);
        desired.normalize();
 
        let steer = JSVector.subGetNew(desired, this.vel);
-       steer.setMagnitude(separation.value);
+       steer.setMagnitude(15);
        this.applyForce(steer);
      }
-     boids[i].vel.setMagnitude(this.maxVel);
+     this.boidList[i].vel.setMagnitude(this.maxVel);
   }
 }
 
 Boid.prototype.cohesion = function(){
-  var neighborhoodDist = 100;
+  var neighborhoodDist = 90;
   let sum = new JSVector();
   var count = 0;
-  for(let i = 0; i < boids.length; i++){
-      var dist = this.loc.distance(boids[i].loc);
+  for(let i = 0; i < this.boidList.length; i++){
+      var dist = this.loc.distance(this.boidList[i].loc);
       if((dist > 0) && (dist < neighborhoodDist)){
-      sum.add(boids[i].loc);
+      sum.add(this.boidList[i].loc);
       count++;
     }
   }
   if(count > 0){
     sum.divide(count);
-    this.seek(sum, cohesion.value);
+    this.seek(sum, 10);
   }
 }
 
@@ -100,20 +109,20 @@ Boid.prototype.align = function(){
   let sum = new JSVector();
   var neighborhoodDist = 100;
   var count = 0;
-  for(let i = 0; i < boids.length; i++){
-      var dist = this.loc.distance(boids[i].loc);
+  for(let i = 0; i < this.boidList.length; i++){
+      var dist = this.loc.distance(this.boidList[i].loc);
       if((dist > 0) && (dist < neighborhoodDist)){
-      sum.add(boids[i].vel);
+      sum.add(this.boidList[i].vel);
       count++;
     }
   }
   if(count > 0){
     sum.divide(count);
-    sum.setMagnitude(this.maxVel);
+    sum.setMagnitude(.6*this.maxVel);
     let steer = JSVector.subGetNew(sum, this.vel);
     steer.normalize();
 
-    steer.setMagnitude(alignment.value);
+    steer.setMagnitude(10);
     this.applyForce(steer);
   }
 }
@@ -129,13 +138,13 @@ Boid.prototype.draw = function(){
   context.rotate(direction);
 
   context.beginPath();
-  context.moveTo(-5, 5);
-  context.lineTo(0, -5/.7);
-  context.lineTo(5, 5);
+  context.moveTo(-3.5, 3.5);
+  context.lineTo(0, -5);
+  context.lineTo(3.5, 3.5);
   context.closePath();
 
   context.lineWidth = 2;
-  context.strokeStyle = 'rgb(255, 255, 255)';
+  context.strokeStyle = this.color;
   context.stroke();
 
 
@@ -147,7 +156,6 @@ Boid.prototype.run = function(){
   this.align();
   this.cohesion();
   this.checkEdges();
-  this.separate();
   this.update();
   this.draw();
 }
