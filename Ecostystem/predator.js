@@ -89,19 +89,17 @@ Predator.prototype.checkKilled = function(){
 Predator.prototype.run = function(){
   this.checkEdges();
   for(let i = 0; i < planets.length; i++){
-    if(this.loc.distance(planets[i].loc) < 300){
+    var dist = this.loc.distance(planets[i].loc);
+    if(dist < 20){
+      planets.splice(i,1);
+      i--;
+      let planet = new Planet(Math.random()*(canvas.width-2*this.radius)+this.radius, Math.random()*(canvas.height-2*this.radius)+this.radius, Math.random()*1.6-.8, Math.random()*1.6-.8, 20, 'white', Math.floor(Math.random()*10+4));
+      planets.push(planet);
+      planet.createOrbiters();
+    }else if(dist < 300){
       this.seek(planets[i].loc, 1);
     }
   }
-  // var tempPlanet = this.checkKilled();
-  // if(tempPlanet > 0){
-  //   planets.splice(tempPlanet, 1);
-  //   planets.push(new Planet(Math.random()*(canvas.width-2*this.radius)+this.radius, Math.random()*(canvas.height-2*this.radius)+this.radius, Math.random()*1.6-.8, Math.random()*1.6-.8, 20, 'white', Math.floor(Math.random()*10+4)));
-  //   for(let i = 0; i < orbiters.length; i++){
-  //     orbiters.splice(i, 1);
-  //   }
-  //   planets[tempPlanet].createOrbiters();
-  // }
 
   this.update();
   this.draw();

@@ -25,6 +25,8 @@ let predators = [];
 var image = null;
 var image2 = null;
 var image3 = null;
+var image4 = null;
+var image5 = null;
 
 function init(){
   canvas = document.getElementById("cnv");
@@ -43,8 +45,8 @@ function init(){
   system = new System();
   snakeSystem = new SnakeSystem(5);
   // mouse = new MouseEvent("click");
-  flock1 = new Flock(100, 2, .2, "red");
-  flock2 = new Flock(100, 2, .2, "blue");
+  flock1 = new Flock(200, 2, .2, "red");
+  // flock2 = new Flock(100, 2, .2, "blue");
   //x, y, vx, vy, color
 
   loadShips(150);
@@ -60,6 +62,12 @@ function init(){
 
   image3 = new Image();
   image3.src = 'minion.png';
+
+  image4 = new Image();
+  image4.src = "virus.png";
+
+  image5 = new Image();
+  image5.src = "dog.png";
 
   loadPlanets(3);
   animate();
@@ -84,6 +92,7 @@ function repealAndReplaceShip(){
       particleSystems.push(new ParticleSystem(ships[i].planet.loc.x, ships[i].planet.loc.y, 3, 3, 0, 7, 10));
       ships.splice(i, 1);
       ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*2-1, Math.random()*2-1, 10, 100, 'hsl(310, 90%, 50%)'));
+      i--;
     }
   }
 }
@@ -114,15 +123,15 @@ function animate(){
   // iterate through orbiters array
   // assign colors
   // draw line from planet to orbiter
-  for(j = 0; j < orbiters.length; j++){
-    orbiters[j].run();
-
-    context.lineWidth = 1;
-    context.strokeStyle = 'hsl(' + orbiters[j].hue + ', ' + 100 + '%, ' + 50 + '%)';
-    context.moveTo(orbiters[j].planet.loc.x, orbiters[j].planet.loc.y);
-    context.lineTo(orbiters[j].loc.x, orbiters[j].loc.y);
-    context.stroke();
-  }
+  // for(j = 0; j < orbiters.length; j++){
+  //   orbiters[j].run();
+  //
+  //   context.lineWidth = 1;
+  //   context.strokeStyle = 'hsl(' + orbiters[j].hue + ', ' + 100 + '%, ' + 50 + '%)';
+  //   context.moveTo(orbiters[j].planet.loc.x, orbiters[j].planet.loc.y);
+  //   context.lineTo(orbiters[j].loc.x, orbiters[j].loc.y);
+  //   context.stroke();
+  // }
   // assign colors to planets and run each planet
   for(let j = 0; j < planets.length; j++){
     planets[j].color = 'hsl(' + hue + ', ' + 90 + '%, ' + 50 + '%)';

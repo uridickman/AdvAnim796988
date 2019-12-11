@@ -25,9 +25,9 @@ Flock.prototype.run = function(){
       boidsRed[i].run();
     }
   }
-  if(boidsBlue.length > 0){
-    for(i = 0; i < boidsBlue.length; i++){
-      boidsBlue[i].run();
-    }
-  }
+  // if(boidsBlue.length > 0){
+  //   for(i = 0; i < boidsBlue.length; i++){
+  //     boidsBlue[i].run();
+  //   }
+  // }
 }

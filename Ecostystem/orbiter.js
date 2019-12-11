@@ -26,13 +26,16 @@ Orbiter.prototype.orbit = function(){
 }
 
 Orbiter.prototype.draw = function(){
-    context.strokeStyle = 'transparent';
-    context.fillStyle = 'hsl(' + this.hue + ', ' + 100 + '%, ' + 50 + '%)';
-    context.beginPath();
-    context.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI*2, false);
-    context.fill();
-    context.stroke();
-    this.hue += .5;
+  context.save();
+
+  context.translate(this.loc.x, this.loc.y);
+  var direction = this.vel.getDirection() - Math.PI/2;
+  context.rotate(direction);
+
+  context.drawImage(image5, -20, -20, 40, 40);
+
+
+  context.restore();
 }
 
 Orbiter.prototype.changeOrbRadius = function(){

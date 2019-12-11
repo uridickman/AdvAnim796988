@@ -12,6 +12,7 @@ function Snake(length, x, y, vx, vy, r, c){
   this.alpha;
   this.giveBirth = false;
   this.createTail();
+  this.initVel.setMagnitude(5);
 }
 
 // updates each tail piece in the direction of the head, which has velocity initVel.
@@ -61,7 +62,7 @@ Snake.prototype.draw = function(){
   this.lWidth = 30;
   this.alpha = 50;
     for(let i = 1; i < this.tail.length; i++){
-      context.strokeStyle = "white";
+      context.strokeStyle = "rgba(155,89,182" + this.alpha + ")";
       //'hsl(' + 100 + ', ' + 100 + '%, ' + this.alpha + '%)'
       context.lineWidth = this.lWidth - i*.6;
 
@@ -79,7 +80,7 @@ Snake.prototype.draw = function(){
 
 Snake.prototype.run = function(){
   this.checkEdges();
-  this.checkForSnakes();
+  // this.checkForSnakes();
   this.update();
   this.draw();
 }
