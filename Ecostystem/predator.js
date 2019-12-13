@@ -92,10 +92,10 @@ Predator.prototype.run = function(){
     var dist = this.loc.distance(planets[i].loc);
     if(dist < 20){
       planets.splice(i,1);
+      // let planet = new Planet(0, 0, Math.random()*1.6-.8, Math.random()*1.6-.8, 20, 'white', Math.floor(Math.random()*10+4));
+      // planets.push(planet);
+      // planet.createOrbiters();
       i--;
-      let planet = new Planet(Math.random()*(canvas.width-2*this.radius)+this.radius, Math.random()*(canvas.height-2*this.radius)+this.radius, Math.random()*1.6-.8, Math.random()*1.6-.8, 20, 'white', Math.floor(Math.random()*10+4));
-      planets.push(planet);
-      planet.createOrbiters();
     }else if(dist < 300){
       this.seek(planets[i].loc, 1);
     }

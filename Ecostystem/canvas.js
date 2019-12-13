@@ -113,8 +113,7 @@ function animate(){
   for(let k = 0; k < ships.length; k++){
   ships[k].run();
   }
-  // snakeSystem.run();
-
+  snakeSystem.run();
   // check which planet ship is close to
   // orbit that planet if within 100 pixels
   for(let m = 0; m < ships.length; m++){
