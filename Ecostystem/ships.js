@@ -74,6 +74,7 @@ Ship.prototype.draw = function(){
 
 Ship.prototype.run = function(){
   this.checkOrbit();
+
   if(!this.planet){
     this.checkEdges();
     this.update();
