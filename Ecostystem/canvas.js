@@ -50,7 +50,7 @@ function init(){
   //x, y, vx, vy, color
 
   loadShips(150);
-  for(let i = 0; i < 10; i++){
+  for(let i = 0; i < 3; i++){
     predators.push(new Predator(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*2-1, Math.random()*2-1, 'green'));
   }
 
@@ -69,7 +69,7 @@ function init(){
   image5 = new Image();
   image5.src = "dog.png";
 
-  loadPlanets(3);
+  loadPlanets(8);
   animate();
 }
 
@@ -87,7 +87,7 @@ function loadShips(numShips){
 }
 
 function repealAndReplaceShip(){
-  for(let i = ships.length-1; i > 0; i--){
+  for(let i = ships.length-1; i >= 0; i--){
     if(ships[i].isEaten){
       particleSystems.push(new ParticleSystem(ships[i].planet.loc.x, ships[i].planet.loc.y, 3, 3, 0, 7, 10));
       ships.splice(i, 1);
