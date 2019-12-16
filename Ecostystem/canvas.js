@@ -75,7 +75,7 @@ function init(){
 
 function loadPlanets(numPlanets){
   for(let i = 0; i < numPlanets; i++){
-    planets.push(new Planet(Math.random()*(canvas.width-2*this.radius)+this.radius, Math.random()*(canvas.height-2*this.radius)+this.radius, Math.random()*1.6-.8, Math.random()*1.6-.8, 20, 'white', Math.floor(Math.random()*10+4)));
+    planets.push(new Planet(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.6-.8, Math.random()*1.6-.8, 20, 'white', Math.floor(Math.random()*10+4)));
     planets[i].createOrbiters();
   }
 }
@@ -109,6 +109,9 @@ function animate(){
   // flock2.run();s
   for(let i = 0; i < predators.length; i++){
     predators[i].run();
+  }
+  if(planets.length < 1){
+    loadPlanets(1);
   }
   for(let k = 0; k < ships.length; k++){
   ships[k].run();

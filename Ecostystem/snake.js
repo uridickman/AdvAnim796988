@@ -10,15 +10,18 @@ function Snake(length, x, y, vx, vy, r, c){
   this.newVector = new JSVector();
   this.lWidth;
   this.alpha;
+  this.acc = new JSVector(0,0);
   this.giveBirth = false;
   this.createTail();
-  this.initVel.setMagnitude(5);
+  this.initVel.setMagnitude(2);
+  this.velocities[0].setMagnitude(2);
 }
 
 // updates each tail piece in the direction of the head, which has velocity initVel.
 // each tail piece has velocity vel
 Snake.prototype.update = function(){
   this.tail[0].add(this.velocities[0]);
+  this.velocities[0].add(this.acc);
   for(let i = 1; i < this.tail.length; i++){
     if(this.tail[i].distance(this.tail[i-1]) > this.radius){
       this.newVector = JSVector.subGetNew(this.tail[i], this.tail[i-1]);
@@ -26,6 +29,21 @@ Snake.prototype.update = function(){
       this.tail[i] = this.tail[i].sub(this.newVector);
     }
   }
+  this.acc.multiply(0);
+}
+
+Snake.prototype.applyForce = function(vector){
+  this.acc.add(vector);
+}
+
+Snake.prototype.seek = function(target, multiplier){
+    let desired = JSVector.subGetNew(target, this.tail[0]);
+    desired.normalize();
+    desired.multiply(2);
+    let steer = JSVector.subGetNew(desired, this.velocities[0]);
+    steer.setMagnitude(multiplier);
+    this.applyForce(steer);
+    this.velocities[0].setMagnitude(2);
 }
 
 Snake.prototype.checkForSnakes = function(){
@@ -80,7 +98,18 @@ Snake.prototype.draw = function(){
 
 Snake.prototype.run = function(){
   this.checkEdges();
-  // this.checkForSnakes();
   this.update();
+  for(let i = 0; i < ships.length; i++){
+    var dist = this.tail[0].distance(ships[i].loc);
+    if(dist < 20){
+      ships.splice(i, 1);
+      ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*2-1, Math.random()*2-1, 10, 100, 'hsl(310, 90%, 50%)'));
+      i--;
+    }else if(dist < 100){
+      this.seek(ships[i].loc, 1);
+    }
+  }
+
+  // this.checkForSnakes();
   this.draw();
 }
