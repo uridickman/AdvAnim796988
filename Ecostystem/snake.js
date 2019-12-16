@@ -14,7 +14,7 @@ function Snake(length, x, y, vx, vy, r, c){
   this.giveBirth = false;
   this.createTail();
   this.initVel.setMagnitude(2);
-  this.velocities[0].setMagnitude(2);
+  this.velocities[0].limit(2);
 }
 
 // updates each tail piece in the direction of the head, which has velocity initVel.
@@ -79,20 +79,20 @@ Snake.prototype.checkEdges = function(){
 Snake.prototype.draw = function(){
   this.lWidth = 30;
   this.alpha = 50;
-    for(let i = 1; i < this.tail.length; i++){
-      context.strokeStyle = "rgba(155,89,182" + this.alpha + ")";
-      //'hsl(' + 100 + ', ' + 100 + '%, ' + this.alpha + '%)'
-      context.lineWidth = this.lWidth - i*.6;
 
-      // this.lWidth -= this.lWidth/this.tail.length;
-      this.alpha -= this.alpha/this.tail.length;
-      context.lineCap = 'round';
 
-      context.beginPath();
-      context.moveTo(this.tail[i-1].x, this.tail[i-1].y);
-      context.lineTo(this.tail[i].x, this.tail[i].y);
-      context.stroke();
-    }
+  for(let i = 0; i < this.tail.length; i++){
+    // context.strokeStyle = "rgba(155,89,182" + this.alpha + ")";
+    // //'hsl(' + 100 + ', ' + 100 + '%, ' + this.alpha + '%)'
+    // context.lineWidth = this.lWidth - i*.6;
+    //
+    // // this.lWidth -= this.lWidth/this.tail.length;
+    // this.alpha -= this.alpha/this.tail.length;
+    // context.lineCap = 'round';
+
+    context.beginPath();
+    context.drawImage(image6, this.tail[i].x, this.tail[i].y, 20, 20);
+  }
 }
 
 
@@ -101,7 +101,7 @@ Snake.prototype.run = function(){
   this.update();
   for(let i = 0; i < ships.length; i++){
     var dist = this.tail[0].distance(ships[i].loc);
-    if(dist < 20){
+    if(dist < 10){
       ships.splice(i, 1);
       ships.push(new Ship(Math.random()*(canvas.width), Math.random()*(canvas.height), Math.random()*2-1, Math.random()*2-1, 10, 100, 'hsl(310, 90%, 50%)'));
       i--;

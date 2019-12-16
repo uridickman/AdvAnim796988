@@ -27,6 +27,7 @@ var image2 = null;
 var image3 = null;
 var image4 = null;
 var image5 = null;
+var image6 = null;
 
 function init(){
   canvas = document.getElementById("cnv");
@@ -68,6 +69,9 @@ function init(){
 
   image5 = new Image();
   image5.src = "dog.png";
+
+  image6 = new Image();
+  image6.src = "ball.png";
 
   loadPlanets(8);
   animate();
