@@ -2,68 +2,64 @@ addEventListener("load", init);
 
 var canvas;
 var context;
+//++++++++++++++++++++  Declare Matter variables as global
 var Engine,
     World,
     Bodies,
-    Composite;
+    Composite,
+    Events,
+    Constraint,
+    MouseConstraint,
+    Mouse;
 var engine;
+var boxA,
+    boxB,
+    ground;
 
 function init(){
   canvas = document.getElementById("cnv");
-
   canvas.width = 800;
   canvas.height = 600;
-
   context = canvas.getContext("2d");
-
-  document.body.appendChild(canvas);
-
-  canvas.style.border = "solid black 2px";
-  canvas.style.backgroundColor = "rgb(12, 12, 12)";
-
+  //++++++++++++++++++++++++  Init Matter variables
   Engine = Matter.Engine,
   World = Matter.World,
   Bodies = Matter.Bodies,
-  Composite = Matter.Composite;
+  Composite = Matter.Composite,
+  Events = Matter.Events,
+  Constraint = Matter.Constraint,
+  MouseConstraint = Matter.MouseConstraint,
+  Mouse = Matter.Mouse;
 
   // create two boxes and a ground
-  var boxA = Bodies.rectangle(400, 200, 80, 80);
-  var boxB = Bodies.rectangle(450, 50, 80, 80);
-  var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+  boxA = new Rectangle(400, 200, 80, 80);
+  boxB = new Rectangle(450, 50, 80, 80);
+  ground = new Rectangle(400, 610, 810, 60, true);
 
+  //Create the physics engine
   engine = Engine.create();
-
-  // add all of the bodies to the world
-  World.add(engine.world, [boxA, boxB, ground]);
-
+  // add engine.World and all of the bodies to the world
+  
   render();
 }
 
 function render(){
-
+  //  +++++++++++++++++++++++++++++++++++++++  ???
   var bodies = Composite.allBodies(engine.world);
 
-  window.requestAnimationFrame(render);
-  Engine.update(engine, 1000 / 60);
-
-  context.fillStyle = '#fff';
+  Engine.update(engine, 1000/60); //+++++++++  ???
+  context.fillStyle = '#003';
   context.fillRect(0, 0, canvas.width, canvas.height);
-
   context.beginPath();
 
-  for (var i = 0; i < bodies.length; i += 1) {
-        var vertices = bodies[i].vertices;
+  //calls run function from Rectangles
+  boxA.run();
+  boxB.run();
+  ground.run();
 
-        context.moveTo(vertices[0].x, vertices[0].y);
+  context.lineWidth = 5;
+  context.strokeStyle = '#A0A';
+  context.stroke();
 
-        for (var j = 1; j < vertices.length; j += 1) {
-            context.lineTo(vertices[j].x, vertices[j].y);
-        }
-
-        context.lineTo(vertices[0].x, vertices[0].y);
-    }
-
-    context.lineWidth = 1;
-    context.strokeStyle = '#999';
-    context.stroke();
+  window.requestAnimationFrame(render);
 }
