@@ -9,7 +9,7 @@ function Rectangle(x, y, width, height, static = false){
 
 //translates and rotates the inputted body to the correct angle/position
 Rectangle.prototype.run = function(){
-  World.add(engine.world, [boxA.newRect, boxB.newRect, ground.newRect]);
+  
   //checks if it is a ground or a moving object
   if(!this.isStatic){
     context.save();
