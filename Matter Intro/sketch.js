@@ -49,6 +49,10 @@ function init(){
   render();
 }
 
+// function drawPolygon(){
+  
+// }
+
 function render(){
   //  +++++++++++++++++++++++++++++++++++++++  ???
   // var bodies = Composite.allBodies(engine.world);
@@ -67,7 +71,7 @@ function render(){
   boxA.run();
   boxB.run();
   
-  // slingshot.run();
+  slingshot.run();
 
   context.lineWidth = 5;
   context.strokeStyle = '#A0A';
