@@ -1,26 +1,26 @@
 var Example = Example || {};
 
-Example.slingshot = function() {
+Example.slingshot = function(){
     // create engine
     var engine = Engine.create(),
         world = engine.world;
 
     // create renderer
-    var render = Render.create({
-        element: document.body,
-        engine: engine,
-        options: {
-            width: 800,
-            height: 600,
-            showAngleIndicator: true
-        }
-    });
+    // var render = Render.create({
+    //     element: document.body,
+    //     engine: engine,
+    //     options: {
+    //         width: 800,
+    //         height: 600,
+    //         showAngleIndicator: true
+    //     }
+    // });
 
-    Render.run(render);
-
-    // create runner
-    var runner = Runner.create();
-    Runner.run(runner, engine);
+    // Render.run(render);
+    //
+    // // create runner
+    // var runner = Runner.create();
+    // Runner.run(runner, engine);
 
     // add bodies
     var ground = Bodies.rectangle(395, 600, 815, 50, { isStatic: true }),
@@ -43,6 +43,29 @@ Example.slingshot = function() {
         return Bodies.rectangle(x, y, 25, 40);
     });
 
+
+
+    // keep the mouse in sync with rendering
+    // render.mouse = mouse;
+
+    // fit the render viewport to the scene
+    // Render.lookAt(render, {
+    //     min: { x: 0, y: 0 },
+    //     max: { x: 800, y: 600 }
+    // });
+
+    // context for MatterTools.Demo
+    // return {
+    //     engine: engine,
+    //     runner: runner,
+    //     render: render,
+    //     canvas: render.canvas,
+    //     stop: function() {
+    //         Matter.Render.stop(render);
+    //         Matter.Runner.stop(runner);
+    //     }
+    // };
+
     World.add(engine.world, [ground, pyramid, ground2, pyramid2, rock, elastic]);
 
     Events.on(engine, 'afterUpdate', function() {
@@ -54,7 +77,7 @@ Example.slingshot = function() {
     });
 
     // add mouse control
-    var mouse = Mouse.create(render.canvas),
+    var mouse = Mouse.create(canvas),
         mouseConstraint = MouseConstraint.create(engine, {
             mouse: mouse,
             constraint: {
@@ -66,29 +89,4 @@ Example.slingshot = function() {
         });
 
     World.add(world, mouseConstraint);
-
-    // keep the mouse in sync with rendering
-    render.mouse = mouse;
-
-    // fit the render viewport to the scene
-    Render.lookAt(render, {
-        min: { x: 0, y: 0 },
-        max: { x: 800, y: 600 }
-    });
-
-    // context for MatterTools.Demo
-    return {
-        engine: engine,
-        runner: runner,
-        render: render,
-        canvas: render.canvas,
-        stop: function() {
-            Matter.Render.stop(render);
-            Matter.Runner.stop(runner);
-        }
-    };
 };
-
-if (typeof module !== 'undefined') {
-    module.exports = Example[Object.keys(Example)[0]];
-}
