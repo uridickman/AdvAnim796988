@@ -40,6 +40,9 @@ function init(){
   MouseConstraint = Matter.MouseConstraint,
   Mouse = Matter.Mouse;
 
+  //Create the physics engine
+  engine = Engine.create();
+
   // create two boxes and a ground
   boxA = new Rectangle(400, 200, 80, 80);
   boxB = new Rectangle(450, 50, 80, 80);
@@ -50,9 +53,6 @@ function init(){
   pyramid1 = new Pyramid(500, 300, 25, 40, 9, 10);
   pyramid2 = new Pyramid(550, 0, 25, 40, 5, 10);
   slingshot = new Slingshot();
-
-  //Create the physics engine
-  engine = Engine.create();
   
   // add engine.World and all of the bodies to the world
   World.add(engine.world, [boxA.newRect, boxB.newRect, ground.newRect, ground2.newRect, pyramid1.pyramid, pyramid2.pyramid]);
