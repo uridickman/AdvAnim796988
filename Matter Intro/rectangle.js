@@ -9,13 +9,19 @@ function Rectangle(x, y, width, height, static = false){
 
 //translates and rotates the inputted body to the correct angle/position
 Rectangle.prototype.run = function(){
+  var colorVar = Math.floor(Math.random()*2);
   //checks if it is a ground or a moving object
   if(!this.isStatic){
     context.save();
     context.translate(this.newRect.position.x, this.newRect.position.y);
     var direction = this.newRect.angle;
     context.rotate(direction);
-    context.rect(-.5*this.width, -.5*this.height, this.width, this.height);
+    if(colorVar === 1){
+      context.fillStyle = colors[17];
+    } else {
+      context.fillStyle = colors[8];
+    }
+    context.fillRect(-.5*this.width, -.5*this.height, this.width, this.height);
     context.restore();
   } else {
     //creates ground if isStatic is true

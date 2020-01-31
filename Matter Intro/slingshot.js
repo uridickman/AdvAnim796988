@@ -9,6 +9,8 @@ function Slingshot(){
             stiffness: 0.05
         });
 
+    var rock = this.rock;
+
     // // add mouse control
     var mouse = Mouse.create(canvas),
         mouseConstraint = MouseConstraint.create(engine, {
@@ -19,11 +21,7 @@ function Slingshot(){
         });
 
     World.add(engine.world, [mouseConstraint]);
-
-    World.add(engine.world, [this.rock, this.elastic]);
-
-    var rock = this.rock;
-
+    
     Events.on(engine, 'afterUpdate', function() {
         if (mouseConstraint.mouse.button === -1 && (rock.position.x > 190 || rock.position.y < 430)) {
             this.rock = Bodies.polygon(170, 450, 7, 20, this.rockOptions);
@@ -31,4 +29,6 @@ function Slingshot(){
             this.elastic.bodyB = this.rock;
         }
     });
+    
+    World.add(engine.world, [this.rock, this.elastic]);
 }

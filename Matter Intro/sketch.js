@@ -22,6 +22,7 @@ var boxA,
     pyramid1,
     pyramid2,
     slingshot;
+let colors = [];
 
 function init(){
   canvas = document.getElementById("cnv");
@@ -43,6 +44,8 @@ function init(){
   //Create the physics engine
   engine = Engine.create();
 
+  colors = ['rgb(204, 51, 255)','rgb(255, 51, 204)','rgb(255, 0, 102)','rgb(204, 0, 0)','rgb(255, 51, 0)','rgb(255, 153, 51)','rgb(153, 204, 0)','rgb(102, 255, 51)','rgb(0, 153, 0)','rgb(0, 204, 0)','rgb(0, 204, 102)','rgb(0, 204, 153)','rgb(0, 153, 153)','rgb(0, 102, 153)','rgb(0, 204, 255)','rgb(102, 153, 255)','rgb(153, 102, 255)','rgb(153, 0, 255)'];
+
   // create two boxes and a ground
   boxA = new Rectangle(400, 200, 80, 80);
   boxB = new Rectangle(450, 50, 80, 80);
@@ -58,6 +61,19 @@ function init(){
   World.add(engine.world, [boxA.newRect, boxB.newRect, ground.newRect, ground2.newRect, pyramid1.pyramid, pyramid2.pyramid]);
 
   render();
+}
+
+function drawPolygon(body){
+  
+  var vertice = body.vertices;
+
+  context.moveTo(vertice[0].x, vertice[0].y);
+
+  for (var j = 1; j < vertice.length; j += 1) {
+      context.lineTo(vertice[j].x, vertice[j].y);
+  }
+
+  context.lineTo(vertice[0].x, vertice[0].y);
 }
 
 function render(){
@@ -79,6 +95,8 @@ function render(){
   // wallTwo.run();
   boxA.run();
   boxB.run();
+
+  drawPolygon(slingshot.rock);
 
   //calls run function from pyramids
   pyramid1.run();
