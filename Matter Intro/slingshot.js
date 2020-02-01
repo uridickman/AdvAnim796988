@@ -9,26 +9,34 @@ function Slingshot(){
             stiffness: 0.05
         });
 
-    var rock = this.rock;
-
-    // // add mouse control
-    var mouse = Mouse.create(canvas),
-        mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: {
-                stiffness: 0.2,
-            }
-        });
-
-    World.add(engine.world, [mouseConstraint]);
     
+
+    // // // add mouse control
+    // var mouse = Mouse.create(canvas),
+    //     mouseConstraint = MouseConstraint.create(engine, {
+    //         mouse: mouse,
+    //         constraint: {
+    //             stiffness: 0.2,
+    //         }
+    //     });
+
+    // World.add(engine.world, [mouseConstraint]);
+
+    var el = this.elastic;
+    var rOptions = this.rockOptions;
+    var r = this.rock;
+
     Events.on(engine, 'afterUpdate', function() {
-        if (mouseConstraint.mouse.button === -1 && (rock.position.x > 190 || rock.position.y < 430)) {
-            this.rock = Bodies.polygon(170, 450, 7, 20, this.rockOptions);
-            World.add(engine.world, this.rock);
-            this.elastic.bodyB = this.rock;
+        if (mouseConstraintVar.mouse.button === -1 && (r.position.x > 190 || r.position.y < 430)) {
+            r = Bodies.polygon(170, 450, 7, 20, rOptions);
+            World.add(engine.world, r);
+            el.bodyB = r;
         }
     });
+
+    this.rock = r;
+    this.elastic = el;
+    this.rockOptions = rOptions;
     
     World.add(engine.world, [this.rock, this.elastic]);
 }
