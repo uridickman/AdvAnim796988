@@ -60,24 +60,22 @@ function init(){
   World.add(engine.world, [mouseConstraintVar]);
 
   //array of colors
-  //yes, peter, it looks hot
   colors = ['rgb(204, 51, 255)','rgb(255, 51, 204)','rgb(255, 0, 102)','rgb(204, 0, 0)','rgb(255, 51, 0)','rgb(255, 153, 51)','rgb(153, 204, 0)','rgb(102, 255, 51)','rgb(0, 153, 0)','rgb(0, 204, 0)','rgb(0, 204, 102)','rgb(0, 204, 153)','rgb(0, 153, 153)','rgb(0, 102, 153)','rgb(0, 204, 255)','rgb(102, 153, 255)','rgb(153, 102, 255)','rgb(153, 0, 255)'];
 
   // create two boxes and a ground
-  boxC = new Rectangle(310, 400, 80, 80);
-  // boxA = new Rectangle(310, 400, 80, 80);
-  // boxB = new Rectangle(600, 600, 80, 80);
-  ground = new Rectangle(canvas.width/2, canvas.height-150, canvas.width + 10, 1, true);
+  boxC = new Rectangle(canvas.width/2 - 180, canvas.height - 350, 80, 80);
+  ground = new Rectangle(canvas.width/2, canvas.height - 200, canvas.width + 10, 1, true);
   // ground2 = new Rectangle(canvas.width/2, 250, 200, 20, true);
-  
-  pyramid1 = new Pyramid(canvas.width/2 + 310, canvas.height - 400, 25, 40, 9, 10);
+  slingshot = new Slingshot();
+
+  pyramid1 = new Pyramid(canvas.width/2 + 370, canvas.height - 500, 25, 40, 9, 10);
   // pyramid2 = new Pyramid(canvas.width/2 - 50, 0, 25, 40, 5, 10);
   for(let i = 0; i < pyramid1.pyramid.bodies.length; i++){
     pyramid1.fillStyle[i] = colors[Math.floor(Math.random()*(colors.length-1))];
   }
   
   // add engine.World and all of the bodies to the world
-  World.add(engine.world, [ground.newRect, pyramid1.pyramid, boxC.newRect]);
+  World.add(engine.world, [ground.newRect, pyramid1.pyramid, boxC.newRect, slingshot]);
 
   render();
 }
@@ -102,7 +100,7 @@ function render(){
   context.clearRect(0,0, canvas.width, canvas.height)
 
   Engine.update(engine, 1000/60);
-  // context.rect(0, 0, canvas.width, canvas.height);
+
   context.beginPath();
 
   //adjust time scale for debugging
@@ -110,16 +108,10 @@ function render(){
 
   //calls run function from Rectangles
   ground.run();
-  // ground2.run();
 
-  // boxA.run();
+  // drawPolygon(slingshot);
   boxC.run();
-  // console.log(boxA.newRect.angle);
-  // boxB.run();
-
-  // drawPolygon(slingshot.rock);
 
   //calls run function from pyramids
   pyramid1.run();
-  // pyramid2.run();
 }
