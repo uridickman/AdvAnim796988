@@ -65,20 +65,14 @@ function init(){
   // create two boxes and a ground
   boxA = new Rectangle(400, 600, 80, 80);
   boxB = new Rectangle(600, 600, 80, 80);
-  ground = new Rectangle(canvas.width/2, canvas.height-20, canvas.width + 10, 1, true);
+  ground = new Rectangle(canvas.width/2, canvas.height-70, canvas.width + 10, 1, true);
   // ground2 = new Rectangle(canvas.width/2, 250, 200, 20, true);
-  // wallOne = new Rectangle(0, canvas.height/2 - 25, 60, canvas.height + 10, true);
-  // wallTwo = new Rectangle(canvas.width, canvas.height/2 - 25, 60, canvas.height + 10, true);
   
-  pyramid1 = new Pyramid(canvas.width/2 , canvas.height - 270, 25, 40, 9, 10);
+  pyramid1 = new Pyramid(canvas.width/2 + 100, canvas.height - 300, 25, 40, 9, 10);
   // pyramid2 = new Pyramid(canvas.width/2 - 50, 0, 25, 40, 5, 10);
   for(let i = 0; i < pyramid1.pyramid.bodies.length; i++){
     pyramid1.fillStyle[i] = colors[Math.floor(Math.random()*(colors.length-1))];
   }
-  // for(let i = 0; i < pyramid2.pyramid.bodies.length; i++){
-  //   pyramid2.fillStyle = colors[Math.floor(Math.random()*(colors.length-1))];
-  // }
-  // slingshot = new Slingshot();
   
   // add engine.World and all of the bodies to the world
   World.add(engine.world, [ground.newRect, pyramid1.pyramid, boxA.newRect, boxB.newRect]);
@@ -109,16 +103,16 @@ function render(){
   // context.rect(0, 0, canvas.width, canvas.height);
   context.beginPath();
 
-  //++++++++++++++++++++++++++++++++adjust time scale for debugging
+  //adjust time scale for debugging
   // engine.timing.timeScale = .001;
 
   //calls run function from Rectangles
   ground.run();
   // ground2.run();
-  // wallOne.run();
-  // wallTwo.run();
+
   boxA.run();
-  boxB.run();
+  console.log(boxA.newRect.angle);
+  // boxB.run();
 
   // drawPolygon(slingshot.rock);
 

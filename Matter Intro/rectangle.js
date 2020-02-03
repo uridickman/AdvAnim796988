@@ -5,7 +5,7 @@ function Rectangle(x, y, width, height, static = false){
   //creates width and height properties because they are not in bodies automatically
   this.width = width;
   this.height = height;
-  context.fillStyle = "white";
+  context.fillStyle = colors[Math.floor(Math.random()*(colors.length - 1))];
 }
 
 //translates and rotates the inputted body to the correct angle/position
