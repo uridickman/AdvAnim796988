@@ -17,6 +17,7 @@ var mouseConstraintVar,
 var engine;
 var boxA,
     boxB,
+    boxC,
     ground,
     ground2,
     wallOne,
@@ -63,19 +64,20 @@ function init(){
   colors = ['rgb(204, 51, 255)','rgb(255, 51, 204)','rgb(255, 0, 102)','rgb(204, 0, 0)','rgb(255, 51, 0)','rgb(255, 153, 51)','rgb(153, 204, 0)','rgb(102, 255, 51)','rgb(0, 153, 0)','rgb(0, 204, 0)','rgb(0, 204, 102)','rgb(0, 204, 153)','rgb(0, 153, 153)','rgb(0, 102, 153)','rgb(0, 204, 255)','rgb(102, 153, 255)','rgb(153, 102, 255)','rgb(153, 0, 255)'];
 
   // create two boxes and a ground
-  boxA = new Rectangle(400, 600, 80, 80);
-  boxB = new Rectangle(600, 600, 80, 80);
-  ground = new Rectangle(canvas.width/2, canvas.height-70, canvas.width + 10, 1, true);
+  boxC = new Rectangle(310, 400, 80, 80);
+  // boxA = new Rectangle(310, 400, 80, 80);
+  // boxB = new Rectangle(600, 600, 80, 80);
+  ground = new Rectangle(canvas.width/2, canvas.height-150, canvas.width + 10, 1, true);
   // ground2 = new Rectangle(canvas.width/2, 250, 200, 20, true);
   
-  pyramid1 = new Pyramid(canvas.width/2 + 100, canvas.height - 300, 25, 40, 9, 10);
+  pyramid1 = new Pyramid(canvas.width/2 + 310, canvas.height - 400, 25, 40, 9, 10);
   // pyramid2 = new Pyramid(canvas.width/2 - 50, 0, 25, 40, 5, 10);
   for(let i = 0; i < pyramid1.pyramid.bodies.length; i++){
     pyramid1.fillStyle[i] = colors[Math.floor(Math.random()*(colors.length-1))];
   }
   
   // add engine.World and all of the bodies to the world
-  World.add(engine.world, [ground.newRect, pyramid1.pyramid, boxA.newRect, boxB.newRect]);
+  World.add(engine.world, [ground.newRect, pyramid1.pyramid, boxC.newRect]);
 
   render();
 }
@@ -110,8 +112,9 @@ function render(){
   ground.run();
   // ground2.run();
 
-  boxA.run();
-  console.log(boxA.newRect.angle);
+  // boxA.run();
+  boxC.run();
+  // console.log(boxA.newRect.angle);
   // boxB.run();
 
   // drawPolygon(slingshot.rock);
