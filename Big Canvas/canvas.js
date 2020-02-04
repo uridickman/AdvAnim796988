@@ -1,69 +1,111 @@
 addEventListener("load", init);
-addEventListener('keypress', translateKey);
+addEventListener('keydown', translateKey);
 
+//++++++++++++Assign global variables
 var canvas;
 var context;
-var x = -400;
-var y = -300;
+//set position of origin (x, y)
+var x;
+var y;
+
 var l1;
 var l2;
+var picture1 = new Image();
 
+//++++++++++++Called onload
 function init(){
   canvas = document.getElementById("cnv");
   canvas.width = 800
-  canvas.height = window.innerHeight - 600;
+  canvas.height = 600;
 
   context = canvas.getContext("2d");
-  canvas.style.border = "solid black 2px";
-  canvas.style.backgroundColor = "rgb(100, 100, 100)";
+  canvas.style.backgroundColor = "transparent";
+  picture1.src = "picture1.png";
+
+  x = -canvas.width/2;
+  y = -canvas.height/2;
 
   l1 = new Line(-10000, 0, 10000, 0);
   l2 = new Line(0, -10000, 0, 10000);
 
+  context.translate(0, 0);
   animate();
 }
 
-// function translateKey(key){
-//     switch(key){
-//         case "KeyA":
-//             context.translate(20, 0);
-//             console.log("a");
-//             break;
-//         case "KeyW":
-//             context.translate(0, 20);
-//             break;
-//         case "KeyD":
-//             context.translate(-20, 0);
-//             break;
-//         case "KeyS":
-//             context.translate(0, -20);
-//             break;
-//         default: console.log("aa");
-//     } 
+// function coloredQuadrants(){
+//     for(let quadrant = 1; quadrant < 5; quadrant++){
+//         if(quadrant === 1){
+//           context.beginPath()
+//           context.fillStyle = "rgb(0,128,128)";
+//           context.rect(0, -10000, 10000, 10000);
+//           context.fill();
+//           context.closePath();
+//         } else if (quadrant === 2){
+//           context.beginPath()
+//           context.fillStyle = "rgb(255,99,71)";
+//           context.rect(-10000, -10000, 10000, 10000);
+//           context.fill();
+//           context.closePath();
+//         } else if (quadrant === 3){
+//           context.beginPath()
+//           context.fillStyle = "rgb(238,130,238)";
+//           context.rect(-10000, 0, 10000, 10000);
+//           context.fill();
+//           context.closePath();
+//         } else {
+//           context.beginPath()
+//           context.fillStyle = "rgb(220,20,60)";
+//           context.rect(0, 0, 10000, 10000);
+//           context.fill();
+//           context.closePath();
+//         }
+//       }
 // }
 
+//++++++++++++Called on keydown
 function translateKey(key){
-    if(key === "KeyA"){
-        x -= 20;
-    }
-    if(key === "KeyW"){
-        y -= 20;
-    }
-    if(key === "KeyD"){
-        x += 20
-    }
-    if(key === "KeyS"){
-        y += 20;
-    }
+    var translateRate = 20;
+    switch(key.keyCode){
+        //key A
+        case 65:
+            x -= translateRate;
+            break;
+        //key W
+        case 87:
+            y -= translateRate;
+            break;
+        //key D
+        case 68:
+            x += translateRate;
+            break;
+        //key S
+        case 83:
+            y += translateRate;
+            break;
+        default: console.log("Incorrect key. Try again.");
+    } 
 }
 
 function animate(){
-  requestAnimationFrame(animate);
-  context.clearRect(-10000, -10000, 20000, 20000);
-  context.save();
-  context.translate(-x, -y);
-  l1.run();
-  l2.run();
-  
-  context.restore();
+    requestAnimationFrame(animate);
+    context.clearRect(-10000, -10000, 20000, 20000);
+
+    context.save();
+
+    // coloredQuadrants();
+
+    //translate canvas by (-x, -y) that have been incremented in translateKey(key)
+    context.translate(-x, -y);
+
+    //draw lines
+    l1.run();
+    l2.run();
+
+    //draw 4 images in their resepctive positions in the world 
+    context.drawImage(picture1, -3*canvas.width/4, -3*canvas.height/4, 100, 100); 
+    context.drawImage(picture1, -3*canvas.width/4, 3*canvas.height/4, 100, 100);
+    context.drawImage(picture1, 3*canvas.width/4, -3*canvas.height/4, 100, 100);
+    context.drawImage(picture1, 3*canvas.width/4, 3*canvas.height/4, 100, 100);
+
+    context.restore();
 }
