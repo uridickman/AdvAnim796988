@@ -29,7 +29,7 @@ function Slingshot(){
     Events.on(engine, 'afterUpdate', function() {
         if (mouseConstraintVar.mouse.button === -1 && (r.position.x > 190 || r.position.y < 430)) {
             r = Bodies.polygon(170, 450, 7, 20, rOptions);
-            World.add(engine.world, r);
+            World.add(engine.world, [r]);
             el.bodyB = r;
         }
     });
