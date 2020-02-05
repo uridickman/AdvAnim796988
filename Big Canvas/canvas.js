@@ -10,6 +10,7 @@ var y;
 
 var l1;
 var l2;
+
 var picture1 = new Image();
 
 //++++++++++++Called onload
@@ -19,7 +20,7 @@ function init(){
   canvas.height = 600;
 
   context = canvas.getContext("2d");
-  canvas.style.backgroundColor = "transparent";
+  canvas.style.backgroundColor = "rgb(135,206,250)";
   picture1.src = "picture1.png";
 
   x = -canvas.width/2;
@@ -31,36 +32,6 @@ function init(){
   context.translate(0, 0);
   animate();
 }
-
-// function coloredQuadrants(){
-//     for(let quadrant = 1; quadrant < 5; quadrant++){
-//         if(quadrant === 1){
-//           context.beginPath()
-//           context.fillStyle = "rgb(0,128,128)";
-//           context.rect(0, -10000, 10000, 10000);
-//           context.fill();
-//           context.closePath();
-//         } else if (quadrant === 2){
-//           context.beginPath()
-//           context.fillStyle = "rgb(255,99,71)";
-//           context.rect(-10000, -10000, 10000, 10000);
-//           context.fill();
-//           context.closePath();
-//         } else if (quadrant === 3){
-//           context.beginPath()
-//           context.fillStyle = "rgb(238,130,238)";
-//           context.rect(-10000, 0, 10000, 10000);
-//           context.fill();
-//           context.closePath();
-//         } else {
-//           context.beginPath()
-//           context.fillStyle = "rgb(220,20,60)";
-//           context.rect(0, 0, 10000, 10000);
-//           context.fill();
-//           context.closePath();
-//         }
-//       }
-// }
 
 //++++++++++++Called on keydown
 function translateKey(key){
@@ -91,8 +62,6 @@ function animate(){
     context.clearRect(-10000, -10000, 20000, 20000);
 
     context.save();
-
-    // coloredQuadrants();
 
     //translate canvas by (-x, -y) that have been incremented in translateKey(key)
     context.translate(-x, -y);
