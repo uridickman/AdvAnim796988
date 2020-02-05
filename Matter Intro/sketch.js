@@ -102,6 +102,7 @@ function render(){
   window.requestAnimationFrame(render);
   context.clearRect(0,0, canvas.width, canvas.height)
 
+  
   Engine.update(engine, 1000/60);
 
   context.beginPath();
@@ -112,6 +113,16 @@ function render(){
   boxC.run();
 
   ground.run();
+  
+  if(!slingshot.released){
+    context.beginPath();
+    context.strokeStyle = "black 3px";
+    context.moveTo(slingshot.rock.position.x,slingshot.rock.position.y);
+    context.lineTo(slingshot.anchor.x, slingshot.anchor.y);
+    context.stroke();
+  } else {
+    return;
+  }
 
   drawPolygon(slingshot.rock);
 
