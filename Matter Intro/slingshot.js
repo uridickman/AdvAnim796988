@@ -6,10 +6,14 @@ function Slingshot(){
     this.elastic = Constraint.create({
             pointA: this.anchor,
             bodyB: this.rock,
-            stiffness: 0.05
-        });
-    this.released = false;
+            stiffness: 0.05,
+            length: 20
 
+        });
+    
+    World.add(engine.world, [this.rock, this.elastic]);
+
+    //temp vars to save info about object vars
     var el = this.elastic;
     var rOptions = this.rockOptions;
     var r = this.rock;
@@ -19,14 +23,13 @@ function Slingshot(){
             r = Bodies.polygon(170, 450, 7, 20, rOptions);
             World.add(engine.world, [r]);
             el.bodyB = r;
-            
         }
-        this.released = true;
+        
     });
 
     this.rock = r;
     this.elastic = el;
     this.rockOptions = rOptions;
     
-    World.add(engine.world, [this.rock, this.elastic]);
+    // World.add(engine.world, [this.rock, this.elastic]);
 }

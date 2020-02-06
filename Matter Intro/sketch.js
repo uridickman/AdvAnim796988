@@ -97,6 +97,10 @@ function drawPolygon(body){
   context.stroke();
 }
 
+function distance(xOne, yOne, xTwo, yTwo){
+  return Math.sqrt((xOne-xTwo)*(xOne-xTwo) + (yOne-yTwo)*(yOne-yTwo));
+}
+
 function render(){
   // console.log(boxA.newRect.angularSpeed)
   window.requestAnimationFrame(render);
@@ -113,20 +117,33 @@ function render(){
   boxC.run();
 
   ground.run();
-  
-  if(!slingshot.released){
-    context.beginPath();
-    context.strokeStyle = "black 3px";
-    context.moveTo(slingshot.rock.position.x,slingshot.rock.position.y);
-    context.lineTo(slingshot.anchor.x, slingshot.anchor.y);
-    context.stroke();
-  } else {
-    return;
-  }
 
   drawPolygon(slingshot.rock);
 
+  //draw circle on anchor
+  context.beginPath();
+  context.fillStyle = "red";
+  context.arc(slingshot.anchor.x, slingshot.anchor.y, 9, 0, 2 * Math.PI, false);
+  context.fill();
+  context.closePath();
 
   //calls run function from pyramids
   pyramid1.run();
+
+  if ((distance(slingshot.rock.position.x, slingshot.rock.position.y, slingshot.anchor.x, slingshot.anchor.y)) < 160) {
+    let r = slingshot.rock;
+    let a = slingshot.anchor;
+    context.beginPath();
+    // context.strokeStyle = "black 40px";
+    context.moveTo(r.position.x, r.position.y);
+    context.lineTo(a.x, a.y);
+    context.stroke();
+    
+  } else {
+    context.moveTo(slingshot.anchor.x, slingshot.anchor.y);
+    context.lineTo(slingshot.anchor.x, slingshot.anchor.y + 35);
+    context.stroke();
+  }
+
+  
 }
