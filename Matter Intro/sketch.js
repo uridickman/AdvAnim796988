@@ -1,4 +1,5 @@
 addEventListener("load", init);
+addEventListener("afterupdate", createNewRock);
 
 var canvas;
 var context;
@@ -15,6 +16,7 @@ var Engine,
 var mouseConstraintVar,
     mouseVar;
 var engine;
+var updateEvent = new Event("afterUpdate");
 var boxA,
     boxB,
     boxC,
@@ -25,7 +27,8 @@ var boxA,
     pyramid1,
     pyramid2,
     slingshot;
-let colors = [];
+let colors = [],
+    rocks = [];
 
 function init(){
   canvas = document.getElementById("cnv");
@@ -77,8 +80,26 @@ function init(){
   
   // add engine.World and all of the bodies to the world
   World.add(engine.world, [ground.newRect, pyramid1.pyramid, boxC.newRect, slingshot]);
+  
+  
 
   render();
+}
+
+function createNewRock(){
+  //temp vars to save info about object vars
+  var el = slingshot.elastic;
+  var rOptions = slingshot.rockOptions;
+  var r = slingshot.rock;
+  if (mouseConstraintVar.mouse.button === -1 && (r.position.x > 190 || r.position.y < 430)) {
+    r = Bodies.polygon(170, 450, 7, 20, rOptions);
+    World.add(engine.world, [r]);
+    el.bodyB = r;
+  }
+
+  slingshot.rock = r;
+  slingshot.elastic = el;
+  slingshot.rockOptions = rOptions;
 }
 
 //draws by connecting vertices if not a rectangle or pyramid (for now)
@@ -108,6 +129,7 @@ function render(){
 
   
   Engine.update(engine, 1000/60);
+  window.dispatchEvent(updateEvent);
 
   context.beginPath();
 
@@ -129,25 +151,19 @@ function render(){
 
   //calls run function from pyramids
   pyramid1.run();
+  
+  // let newRock = Bodies.polygon(170, 450, 7, 20, slingshot.rockOptions);
 
-  if (mouseConstraintVar.mouse.button === 0) {
-    let r = slingshot.rock;
-    let a = slingshot.anchor;
-    context.beginPath();
-    // context.strokeStyle = "black 40px";
-    context.moveTo(r.position.x, r.position.y);
-    context.lineTo(a.x, a.y);
-    context.stroke();
-    
-  } else if ((distance(slingshot.rock.position.x, slingshot.rock.position.y, slingshot.anchor.x, slingshot.anchor.y)) > 160){
-    context.moveTo(slingshot.anchor.x, slingshot.anchor.y);
-    context.lineTo(slingshot.anchor.x, slingshot.anchor.y + 20);
-    context.stroke();
-  } else {
-    context.moveTo(slingshot.anchor.x, slingshot.anchor.y);
-    context.lineTo(slingshot.anchor.x, slingshot.anchor.y + 20);
-    context.stroke();
-  }
+  // if (mouseConstraintVar.mouse.button != -1 && distance(slingshot.rock.position.x, slingshot.rock.position.y, slingshot.anchor.x, slingshot.anchor.y) < 160) {
+  //   let r = slingshot.rock;
+  //   let a = slingshot.anchor;
+  //   context.beginPath();
+  //   context.moveTo(r.position.x, r.position.y);
+  //   context.lineTo(a.x, a.y);
+  //   context.stroke();
+  //   // World.add(engine.world, [newRock])
+  // }
 
+  // drawPolygon(newRock);
   
 }
