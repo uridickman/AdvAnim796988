@@ -130,7 +130,7 @@ function render(){
   //calls run function from pyramids
   pyramid1.run();
 
-  if ((distance(slingshot.rock.position.x, slingshot.rock.position.y, slingshot.anchor.x, slingshot.anchor.y)) < 160) {
+  if (mouseConstraintVar.mouse.button === 0) {
     let r = slingshot.rock;
     let a = slingshot.anchor;
     context.beginPath();
@@ -139,9 +139,13 @@ function render(){
     context.lineTo(a.x, a.y);
     context.stroke();
     
+  } else if ((distance(slingshot.rock.position.x, slingshot.rock.position.y, slingshot.anchor.x, slingshot.anchor.y)) > 160){
+    context.moveTo(slingshot.anchor.x, slingshot.anchor.y);
+    context.lineTo(slingshot.anchor.x, slingshot.anchor.y + 20);
+    context.stroke();
   } else {
     context.moveTo(slingshot.anchor.x, slingshot.anchor.y);
-    context.lineTo(slingshot.anchor.x, slingshot.anchor.y + 35);
+    context.lineTo(slingshot.anchor.x, slingshot.anchor.y + 20);
     context.stroke();
   }
 
