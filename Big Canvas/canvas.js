@@ -20,8 +20,8 @@ var scale = 4;
 var miniContext;
 var miniCanvas;
 var miniWorld = {
-    width: world.width/scale,
-    height: world.height/scale
+    width: world.width,
+    height: world.height
 };
 //set position of mini origin (miniX, miniY)
 var minX;
@@ -127,7 +127,7 @@ function animate(){
 
     miniContext.scale(miniCanvas.width/world.width, miniCanvas.height/world.height);
     //translate canvas by (-x, -y) that have been incremented in translateKey(key)
-    miniContext.translate(world.width/2, world.width/2 - 500);
+    miniContext.translate(world.width/2, world.height/2);
 
     //draw lines
     miniL1.run();
@@ -139,11 +139,11 @@ function animate(){
     miniContext.rect(x, y, canvas.width, canvas.height);
     miniContext.stroke();
 
-    //draw 4 images in their resepctive positions in the world 
-    miniContext.drawImage(picture1, -3*miniCanvas.width/4, -3*miniCanvas.height/4, 100/scale*2, 100/scale*2); 
-    miniContext.drawImage(picture1, -3*miniCanvas.width/4, 3*miniCanvas.height/4, 100/scale*2, 100/scale*2);
-    miniContext.drawImage(picture1, 3*miniCanvas.width/4, -3*miniCanvas.height/4, 100/scale*2, 100/scale*2);
-    miniContext.drawImage(picture1, 3*miniCanvas.width/4, 3*miniCanvas.height/4, 100/scale*2, 100/scale*2);
+    //draw 4 images in their resepctive positions in the mini world 
+    miniContext.drawImage(picture1, -3*canvas.width/4, -3*canvas.height/4, 100, 100); 
+    miniContext.drawImage(picture1, -3*canvas.width/4, 3*canvas.height/4, 100, 100);
+    miniContext.drawImage(picture1, 3*canvas.width/4, -3*canvas.height/4, 100, 100);
+    miniContext.drawImage(picture1, 3*canvas.width/4, 3*canvas.height/4, 100, 100);
 
     miniContext.restore();
 }
