@@ -77,22 +77,18 @@ function translateKey(key){
         //key A
         case 65:
             x -= translateRate;
-            // miniX -= translateRate/scale;
             break;
         //key W
         case 87:
             y -= translateRate;
-            // miniY -= translateRate/scale;
             break;
         //key D
         case 68:
             x += translateRate;
-            // miniX += translateRate/scale;
             break;
         //key S
         case 83:
             y += translateRate;
-            // miniY += translateRate/scale;
             break;
         default: console.log("Incorrect key. Try again.");
     }
