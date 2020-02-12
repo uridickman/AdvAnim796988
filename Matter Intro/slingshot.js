@@ -1,8 +1,11 @@
-function Slingshot(){
+function Slingshot(xPos, yPos){
+    this.x = xPos;
+    this.y = yPos;
     // add bodies
-    this.rockOptions = { density: 0.004 };
-    this.rock = Bodies.polygon(170, 450, 8, 20, this.rockOptions);
-    this.anchor = { x: 170, y: 450 };
+    this.rockOptions = { density: 0.008 };
+    this.rock = Bodies.polygon(this.x, this.y, 8, 20, this.rockOptions);
+    rocks.push(this.rock);
+    this.anchor = { x: this.x, y: this.y };
     this.elastic = Constraint.create({
             pointA: this.anchor,
             bodyB: this.rock,
@@ -12,8 +15,11 @@ function Slingshot(){
         });
     
     World.add(engine.world, [this.rock, this.elastic]);
+}
 
-    
-    
-    // World.add(engine.world, [this.rock, this.elastic]);
+Slingshot.prototype.onRelease = function() {
+    this.rock = Bodies.polygon(this.x, this.y, 7, 20, this.rockOptions);
+    rocks.push(this.rock);
+    World.add(engine.world, this.rock);
+    this.elastic.bodyB = this.rock;
 }

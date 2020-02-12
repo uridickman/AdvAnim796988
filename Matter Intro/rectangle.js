@@ -20,6 +20,7 @@ Rectangle.prototype.run = function(){
     context.restore();
   } else {
     //creates ground if isStatic is true
-      context.rect(this.newRect.position.x-.5*this.width, this.newRect.position.y-.5*this.height, this.width, this.height);
+    context.fillStyle = "rgb(46,139,87)";
+    context.fillRect(this.newRect.position.x-.5*this.width, this.newRect.position.y-.5*this.height, this.width, this.height);
   }
 }
