@@ -63,7 +63,7 @@ function init(){
   
   ground = new Rectangle(canvas.width/2, canvas.height - 120, canvas.width + 50, 240, true);
 
-  slingshot = new Slingshot(170, 450);
+  slingshot = new Slingshot(170, 600);
 
   bird = new Image();
   bird.src = "bird.png";
