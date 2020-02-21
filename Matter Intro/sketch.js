@@ -64,8 +64,9 @@ function init(){
 
   // cloud = new Image(200, 150);
   // cloud.src = "cloud.png";
-  
+
   ground = new Rectangle(canvas.width/2, canvas.height - 120, canvas.width + 50, 240, true);
+
 
   slingshot = new Slingshot(170, 430);
 
@@ -78,10 +79,10 @@ function init(){
   for(let i = 0; i < pyramid1.pyramid.bodies.length; i++){
     pyramid1.fillStyle[i] = colors[Math.floor(Math.random()*(colors.length-1))];
   }
-  
+
   // add engine.World and all of the bodies to the world
   World.add(engine.world, [ground.newRect, pyramid1.pyramid, slingshot]);
-  
+
   render();
 
   //add new rock to rocks[] and world after a rock released from slingshot
@@ -95,7 +96,7 @@ function init(){
 // draws by connecting vertices if not a rectangle or pyramid (for now)
 function drawPolygon(body){
   context.strokeStyle = "black 10px";
-  
+
   var vertex = body.vertices;
 
   context.moveTo(vertex[0].x, vertex[0].y);
@@ -117,7 +118,7 @@ function render(){
   // console.log(boxA.newRect.angularSpeed)
   window.requestAnimationFrame(render);
   context.clearRect(0,0, canvas.width, canvas.height)
-  
+
   Engine.update(engine, 1000/60);
 
   context.beginPath();
@@ -133,7 +134,7 @@ function render(){
 
   //calls run function from pyramids
   pyramid1.run();
-  
+
   //loop through rocks[] and draw each one
   for(let i = 0; i < rocks.length; i++){
     drawPolygon(rocks[i]);
@@ -145,5 +146,5 @@ function render(){
   context.moveTo(slingshot.anchor.x, slingshot.anchor.y);
   context.lineTo(rocks[rocks.length-1].position.x, rocks[rocks.length-1].position.y)
   context.stroke();
-  
+
 }
