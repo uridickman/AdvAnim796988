@@ -6,9 +6,11 @@ var context;
 var Engine,
     World,
     Bodies,
+    Body,
     Composite,
     Composites,
     Events,
+    Vector,
     Constraint,
     MouseConstraint,
     Mouse;
@@ -34,6 +36,8 @@ function init(){
   Engine = Matter.Engine,
   World = Matter.World,
   Bodies = Matter.Bodies,
+  Body = Matter.Body,
+  Vector = Matter.Vector,
   Composite = Matter.Composite,
   Composites = Matter.Composites,
   Events = Matter.Events,
@@ -63,7 +67,7 @@ function init(){
   
   ground = new Rectangle(canvas.width/2, canvas.height - 120, canvas.width + 50, 240, true);
 
-  slingshot = new Slingshot(170, 450);
+  slingshot = new Slingshot(170, 430);
 
   bird = new Image();
   bird.src = "bird.png";
