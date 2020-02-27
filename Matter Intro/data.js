@@ -1,5 +1,5 @@
 function SendData(){
-    this.slingshotLoc;
-    this.pyramidBlocksLoc = [];
-    this.
+    this.vel;
+    this.loc;
+    
 }

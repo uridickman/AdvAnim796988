@@ -112,7 +112,7 @@ function distance(xOne, yOne, xTwo, yTwo){
 function render(){
   // console.log(boxA.newRect.angularSpeed)
   window.requestAnimationFrame(render);
-  context.clearRect(0,0, canvas.width, canvas.height)
+  context.clearRect(0,0, canvas.width, canvas.height);
   
   Engine.update(engine, 1000/60);
 
