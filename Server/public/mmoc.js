@@ -9,7 +9,7 @@ function MMOC() {
 MMOC.prototype.init = function () {
 
 
-    this.ws = new WebSocket();
+    this.ws = new WebSocket("ws://localhost:8080");
 
     this.ws.onopen = function(event){
         console.log("websocket is open now");
