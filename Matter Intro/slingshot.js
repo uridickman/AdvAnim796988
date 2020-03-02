@@ -18,6 +18,10 @@ function Slingshot(xPos, yPos){
 }
 
 Slingshot.prototype.onRelease = function() {
+    var tempVel = (Vector.sub(this.rock.position, this.anchor));
+    Vector.mult(tempVel, 1);
+    Body.setAngle(this.rock, this.rock.angle);
+    Body.setVelocity(this.rock, tempVel);
     this.rock = Bodies.polygon(this.x, this.y, 7, 20, this.rockOptions);
     rocks.push(this.rock);
     World.add(engine.world, this.rock);
