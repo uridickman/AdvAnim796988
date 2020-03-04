@@ -16,17 +16,17 @@ let data = {
 }
 
 //callback functions for application
-app.get('/ws', function (ws, req) {
+app.ws('/ws', function (ws, req) {
     //upon receiving a message, parse it, check it, and log it
-    ws.onmessage = function (event) {
-        let tempData = JSON.parse(event);
+    ws.on("message", function (mes) {
+        let tempData = JSON.parse(mes);
         switch (tempData.type) {
             case "message":
-                console.log("Message: '" + tempData.msg + "' received.");
+                console.log("Message -- " + tempData.msg + " -- received.");
                 ws.send(JSON.stringify(data));
             break;
         }
-    }
+    });
 });
 
 //open server with express module application
