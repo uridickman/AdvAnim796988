@@ -12,10 +12,12 @@ function setup() {
 
     context = canvas.getContext("2d");
 
-    messenger = new MMOC();
+    messenger = new Client("Hello server!");
 }
 
 function render() {
     window.requestAnimationFrame(render);
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    messenger.checkMessage();
 }
