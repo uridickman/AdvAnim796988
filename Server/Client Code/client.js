@@ -16,7 +16,7 @@ class Client {
             console.log("Open");
         }
 
-        this.ws.onmessage = function (event) {
+        this.ws.onmessage = (event) => {
             console.log("Message -- " + JSON.parse(event).msg + " -- received.");
         }
     }

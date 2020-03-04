@@ -18,6 +18,4 @@ function setup() {
 function render() {
     window.requestAnimationFrame(render);
     context.clearRect(0, 0, canvas.width, canvas.height);
-
-    messenger.checkMessage();
 }
