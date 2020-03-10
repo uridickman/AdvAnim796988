@@ -1,4 +1,6 @@
 function Rectangle(x, y, width, height, static = false){
+  this.x = x;
+  this.y = y;
   this.isStatic = static;
   //creates new body
   this.newRect = Bodies.rectangle(x, y, width, height, { isStatic: static });

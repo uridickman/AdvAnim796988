@@ -18,7 +18,7 @@ var mouseConstraintVar,
     mouseVar;
 var engine;
 var ground,
-    pyramid1,
+    pyramid,
     slingshot,
     cloud;
 let colors = [],
@@ -61,15 +61,12 @@ function init(){
   //array of colors
   colors = ['rgb(204, 51, 255)','rgb(255, 51, 204)','rgb(255, 0, 102)','rgb(204, 0, 0)','rgb(255, 51, 0)','rgb(255, 153, 51)','rgb(153, 204, 0)','rgb(102, 255, 51)','rgb(0, 153, 0)','rgb(0, 204, 0)','rgb(0, 204, 102)','rgb(0, 204, 153)','rgb(0, 153, 153)','rgb(0, 102, 153)','rgb(0, 204, 255)','rgb(102, 153, 255)','rgb(153, 102, 255)','rgb(153, 0, 255)'];
 
-  // cloud = new Image(200, 150);
-  // cloud.src = "cloud.png";
 
   ground = new Rectangle(canvas.width/2, canvas.height - 120, canvas.width + 50, 240, true);
 
+  slingshot = new Slingshot(170, 500);
 
-  slingshot = new Slingshot(170, 430);
-
-  pyramid1 = new Pyramid(canvas.width/2 + 310, canvas.height - 500, 5, 25, 40);
+  pyramid = new Pyramid(canvas.width/2 + 310, ground.y - 200, 5, 25, 40);
 
   //fill each rectangle in pyramid with a random color from colors[]
   // for(let i = 0; i < pyramid1.pyramid.bodies.length; i++){
@@ -131,7 +128,7 @@ function render(){
   context.closePath();
 
   //calls run function from pyramids
-  pyramid1.run();
+  pyramid.run();
 
   //loop through rocks[] and draw each one
   for(let i = 0; i < rocks.length; i++){
