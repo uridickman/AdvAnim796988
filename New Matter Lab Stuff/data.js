@@ -1,6 +1,7 @@
 var initialWorld = {
     "players": [
-        "player1": {
+        {
+            "name": "player1",
             "bodies": [
                 {
                     "name": "body1",
@@ -32,7 +33,8 @@ var initialWorld = {
                 "length": ""
             }
         },
-        "player2": {
+        {
+            "name": "player2",
             "bodies": [
                 {
                     "name": "body1",

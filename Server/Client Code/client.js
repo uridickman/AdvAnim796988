@@ -7,6 +7,7 @@ class Client {
             msg: message,
         };
 
+        // let url = "//" + document.domain + ":" + location.port + "/ws";
         let url = "ws://localhost:8080/ws";
 
         this.ws = new WebSocket(url);

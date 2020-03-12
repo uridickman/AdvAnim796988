@@ -1,0 +1,16 @@
+{
+    "bodies": [
+        {
+            "name": "body1",
+            "type": "rectangle",
+            "position":{
+                "x": "30",
+                "y": "-15"
+            },
+            "size": {
+                "width": "20",
+                "height": "30"
+            } 
+        }
+    ]
+}
